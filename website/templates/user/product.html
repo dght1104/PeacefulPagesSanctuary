@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}My product{% endblock %}
+{% block content %}
+<body class="sub_page">
+      <div class="hero_area">
+         <!-- header section strats -->
+          {% include "navbar.html" %}
+      </div>
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Product Grid</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+
+      <!-- product section -->
+        <section class="product_section layout_padding">
+            <div class="container">
+            <div class="heading_container heading_center">
+               <h2>
+                  Our <span>products</span>
+               </h2>
+            </div>
+            <div class="row">
+            {% for p in items %}
+             <div class="col-6 col-md-4 col-lg-3 mb-4">
+        <a href="/product/{{ p.prod_id }}" class="product-card">
+            <div class="product-img">
+                <img src="{{ p.prod_image or 'images/default.png' }}" alt="{{ p.prod_name }}">
+            </div>
+            <div class="product-info">
+                <h5 class="product-name">{{ p.prod_name }}</h5>
+                <h6 class="product-price">${{ "%.2f"|format(p.prod_price) }}</h6>
+            </div>
+        </a>
+    </div>
+            {% endfor %}
+            </div>
+        </div>       
+        </section>
+      <!-- end product section -->
+               <!-- Pagination -->
+<nav aria-label="Page navigation">
+    <ul class="my-pagination justify-content-center">
+        {% if pagination.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('views.product', page=pagination.prev_num) }}">« </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">«</span>
+        </li>
+        {% endif %}
+
+        {% for p in range(1, pagination.pages + 1) %}
+        <li class="page-item {% if p == pagination.page %}active{% endif %}">
+            <a class="page-link" href="{{ url_for('views.product', page=p) }}">{{ p }}</a>
+        </li>
+        {% endfor %}
+
+        {% if pagination.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('views.product', page=pagination.next_num) }}"> »</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link"> »</span>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+
+<!-- footer section -->
+{% endblock%}
+

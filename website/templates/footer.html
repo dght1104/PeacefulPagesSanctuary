@@ -1,0 +1,102 @@
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="full">
+                    
+                    <div class="information_f">
+                        <p><strong>ADDRESS:</strong> 28 White tower, Street Name New York City, USA</p>
+                        <p><strong>TELEPHONE:</strong> +91 987 654 3210</p>
+                        <p><strong>EMAIL:</strong> yourmain@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="widget_menu">
+                                <h3>Menu</h3>
+                                <ul>
+                                    <li><a href="{{ url_for('views.home') }}">Home</a></li>
+                                    <li><a href="{{ url_for('views.about') }}">About</a></li>
+          
+                                    <li><a href="{{ url_for('views.testimonial') }}">Testimonial</a></li>
+                                    <li><a href="{{ url_for('views.contact') }}">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="widget_menu">
+                                <h3>Account</h3>
+                                <ul>
+                                    <li><a href="#">Account</a></li>
+                                    <li><a href="#">Checkout</a></li>
+                                    <li><a href="#">Login</a></li>
+                                    <li><a href="#">Register</a></li>
+                                    <li><a href="#">Shopping</a></li>
+                                    <li><a href="#">Widget</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+                <div class="col-md-5">
+                    <div class="widget_menu">
+                        <h3>Newsletter</h3>
+                        <div class="information_f">
+                          <p>Subscribe by our newsletter and get update protidin.</p>
+                        </div>
+                        <div class="form_sub">
+                           <form>
+                                <fieldset>
+                                    <div class="field">
+                                        <input type="email" placeholder="Enter Your Mail" name="email" />
+                                        <input type="submit" value="Subscribe" />
+                                    </div>
+                                </fieldset>
+                           </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- jQuery -->
+<script src="{{ url_for('static', filename='user/js/jquery-3.4.1.min.js') }}"></script>
+
+<!-- Popper JS -->
+<script src="{{ url_for('static', filename='user/js/popper.min.js') }}"></script>
+
+<!-- Bootstrap JS -->
+<script src="{{ url_for('static', filename='user/js/bootstrap.js') }}"></script>
+
+<!-- Custom JS -->
+
+<!-- plugins:js -->
+    <script src="{{ url_for('static', filename='admin/vendors/js/vendor.bundle.base.js') }}"></script>
+    <!-- endinject -->
+
+    <!-- Plugin js for this page -->
+    <script src="{{ url_for('static', filename='admin/vendors/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/vendors/datatables.net/jquery.dataTables.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/dataTables.select.min.js') }}"></script>
+    <!-- End plugin js for this page -->
+
+    <!-- inject:js -->
+    <script src="{{ url_for('static', filename='admin/js/off-canvas.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/hoverable-collapse.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/template.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/settings.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/todolist.js') }}"></script>
+    <!-- endinject -->
+
+    <!-- Custom js for this page-->
+    <script src="{{ url_for('static', filename='admin/js/dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/js/Chart.roundedBarCharts.js') }}"></script>
+    <!-- End custom js for this page-->
+     
+<script src="{{ url_for('static', filename='user/js/custom.js') }}"></script>
