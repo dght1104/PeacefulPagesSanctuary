@@ -102,3 +102,4 @@ def logout():
     logout_user()
     flash("Đã đăng xuất", "success")
     return redirect(url_for('views.home'))
+

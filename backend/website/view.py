@@ -34,3 +34,7 @@ def contact():
 @views.route('/profile')
 def profile():
     return render_template('user/profile.html')
+
+@views.route('/api/hello')
+def hello():
+    return {"msg": "Hello Flask"}

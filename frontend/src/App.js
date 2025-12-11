@@ -32,6 +32,14 @@ import routes from "routes";
 export default function App() {
   const { pathname } = useLocation();
 
+  // Test API Flask
+  useEffect(() => {
+    fetch("http://localhost:5000/api/hello")
+      .then((res) => res.json())
+      .then((data) => console.log("Flask API:", data))
+      .catch((err) => console.error("API error:", err));
+  }, []);
+
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
