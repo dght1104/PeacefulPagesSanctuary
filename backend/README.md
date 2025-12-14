@@ -5,3 +5,17 @@ Vào folder bật terimal nhập lần lượt để tạo môi trường tươn
 python -m venv env
  env\Scripts\activate.bat  
  pip install -r requirements.txt
+backend/
+├── website/
+│    ├── __init__.py
+│    ├── models.py
+│    ├── api/
+│    │   ├── __init__.py
+│    │   ├── auth_api.py
+│    │   ├── product_api.py
+│    │   └── upload_api.py
+│    └── 
+├── website/
+├── website/
+├── website/
+├── website/
