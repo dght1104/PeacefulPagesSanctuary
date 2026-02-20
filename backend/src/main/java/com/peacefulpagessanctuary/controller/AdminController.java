@@ -35,8 +35,8 @@ public class AdminController {
 
         product.setName(updated.getName());
         product.setPrice(updated.getPrice());
-        product.setProdReceived(updated.getProdReceived());
-        product.setDiscountPercent(updated.getDiscountPercent());
+        product.setReceived(updated.getReceived());
+        product.setDiscount(updated.getDiscount());
 
         Product saved = productRepository.save(product);
 

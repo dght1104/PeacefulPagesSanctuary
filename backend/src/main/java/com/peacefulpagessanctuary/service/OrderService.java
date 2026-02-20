@@ -6,6 +6,8 @@ import com.peacefulpagessanctuary.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -52,7 +54,7 @@ public class OrderService {
         Customer customer = customerRepository.findByEmail(customerEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
 
-        List<CartItem> cartItems = cartItemRepository.findByCustomer(customer);
+        List<CartItem> cartItems = cartItemRepository.findByCustomerId(customer.getId());
 
         if (cartItems.isEmpty()) {
             throw new InvalidOperationException("Cart is empty");
@@ -66,21 +68,23 @@ public class OrderService {
             Product product = productRepository.findById(item.getProduct().getId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
-            long availableStock = product.getProdReceived() - product.getProdSold();
+            long availableStock = product.getReceived() - product.getSold();
 
             if (availableStock < item.getQuantity()) {
                 throw new InsufficientStockException("Insufficient stock for product: "
                         + product.getName());
             }
 
-            long discountedPrice = product.getPrice();
+            BigDecimal discountedPrice = product.getPrice();
 
-            if (product.getDiscountPercent() != null) {
-                discountedPrice = discountedPrice -
-                        (discountedPrice * product.getDiscountPercent() / 100);
+            if (product.getDiscount() != null) {
+                discountedPrice = discountedPrice.subtract(
+                        discountedPrice.multiply(product.getDiscount())
+                                .divide(BigDecimal.valueOf(100), 2, java.math.RoundingMode.HALF_UP)
+                );
             }
 
-            long itemTotal = discountedPrice * item.getQuantity();
+            long itemTotal = discountedPrice.multiply(BigDecimal.valueOf(item.getQuantity())).longValue();
             subtotal += itemTotal;
 
             OrderDetail detail = new OrderDetail();
@@ -101,15 +105,18 @@ public class OrderService {
             productCoupon = couponService.validateProductCoupon(
                     productCouponCode, customer, subtotal);
 
-            if (productCoupon.getPercentage() != null) {
-                productCouponDiscount =
-                        subtotal * productCoupon.getPercentage() / 100;
-            } else {
-                productCouponDiscount = productCoupon.getFixedAmount();
-            }
+            if ("PERCENT".equalsIgnoreCase(productCoupon.getDiscountType())) {
 
-            if (productCouponDiscount > subtotal) {
-                productCouponDiscount = subtotal;
+                productCouponDiscount = BigDecimal.valueOf(subtotal)
+                        .multiply(productCoupon.getDiscountValue())
+                        .divide(BigDecimal.valueOf(100), 0, RoundingMode.HALF_UP)
+                        .longValue();
+
+            } else if ("FIXED".equalsIgnoreCase(productCoupon.getDiscountType())) {
+
+                productCouponDiscount = productCoupon.getDiscountValue()
+                        .setScale(0, RoundingMode.HALF_UP)
+                        .longValue();
             }
         }
 
@@ -117,11 +124,18 @@ public class OrderService {
             shippingCoupon = couponService.validateShippingCoupon(
                     shippingCouponCode, customer, subtotal);
 
-            if (shippingCoupon.getPercentage() != null) {
-                shippingCouponDiscount =
-                        shippingFee * shippingCoupon.getPercentage() / 100;
-            } else {
-                shippingCouponDiscount = shippingCoupon.getFixedAmount();
+             if ("PERCENT".equalsIgnoreCase(shippingCoupon.getDiscountType())) {
+
+                shippingCouponDiscount = BigDecimal.valueOf(shippingFee)
+                        .multiply(shippingCoupon.getDiscountValue())
+                        .divide(BigDecimal.valueOf(100), 0, RoundingMode.HALF_UP)
+                        .longValue();
+
+            } else if ("FIXED".equalsIgnoreCase(shippingCoupon.getDiscountType())) {
+
+                shippingCouponDiscount = shippingCoupon.getDiscountValue()
+                        .setScale(0, RoundingMode.HALF_UP)
+                        .longValue();
             }
 
             if (shippingCouponDiscount > shippingFee) {
@@ -142,7 +156,7 @@ public class OrderService {
         Order order = new Order();
         order.setId(UUID.randomUUID());
         order.setCustomer(customer);
-        order.setTotalAmount(finalTotal);
+        order.setTotal(null);
 
         orderRepository.save(order);
 
@@ -150,7 +164,7 @@ public class OrderService {
 
             Product product = detail.getProduct();
 
-            product.setProdSold(product.getProdSold() + detail.getQuantity());
+            product.setSold(product.getSold() + detail.getQuantity());
 
             detail.setOrder(order);
             orderDetailRepository.save(detail);

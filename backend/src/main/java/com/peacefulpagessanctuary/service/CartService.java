@@ -41,10 +41,10 @@ public class CartService {
     }
 
     public List<CartItem> getCart(Customer customer) {
-        return cartItemRepository.findByCustomer(customer);
+        return cartItemRepository.findByCustomerId(customer.getId());
     }
 
     public void clearCart(Customer customer) {
-        cartItemRepository.deleteByCustomer(customer);
+        cartItemRepository.deleteByCustomerId(customer.getId());
     }
 }

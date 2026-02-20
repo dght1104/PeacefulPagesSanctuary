@@ -28,7 +28,7 @@ public class CouponService {
         Coupon coupon = couponRepository.findByCode(code)
                 .orElseThrow(() -> new ResourceNotFoundException("Coupon not found"));
 
-        if (!coupon.isActive()) {
+        if (!"ACTIVE".equalsIgnoreCase(coupon.getStatus())) {
             throw new CouponInvalidException("Coupon inactive");
         }
 
