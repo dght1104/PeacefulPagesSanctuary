@@ -1,27 +1,24 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=PeacefulPagesSanctuary;encrypt=false
-    username: sa
-    password: 123456
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-
+    url: postgresql://peacefulpagessanctuary_db_user:VYI6ey6ZFT4bdCILeiz5hj4NrHM8iCvQ@dpg-d6bloc6mcj7s73alsttg-a/peacefulpagessanctuary_db
+    username: peacefulpagessanctuary_db_user
+    password: VYI6ey6ZFT4bdCILeiz5hj4NrHM8iCvQ
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: none
-    show-sql: true
+      ddl-auto: validate
     properties:
       hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.SQLServerDialect
-
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+    open-in-view: false
+  sql:
+    init:
+      mode: never
 
 jwt:
-  secret: PeacefulPagesSecretKeyPeacefulPagesSecretKey
+  secret: VGhpc0lzQVNlY3VyZTI1NkJpdEtleUZvckRldlVzZU9ubHkxMjM0
   expiration: 86400000
