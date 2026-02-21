@@ -3,10 +3,11 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://dpg-d6bloc6mcj7s73alsttg-a.singapore-postgres.render.com:5432/peacefulpagessanctuary_db?sslmode=require
-    username: peacefulpagessanctuary_db_user
-    password: VYI6ey6ZFT4bdCILeiz5hj4NrHM8iCvQ
+    url: jdbc:postgresql://ep-rough-unit-a1kq9twv-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+    username: neondb_owner
+    password: npg_mNojQe29AiJr
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: update

@@ -95,6 +95,7 @@
         │   │   └── main.jsx
         │   │
         │   ├── .env
+        │   ├── index.html    
         │   ├── package.json
         │   └── vite.config.js
         │
