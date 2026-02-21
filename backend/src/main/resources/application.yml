@@ -3,13 +3,13 @@ server:
 
 spring:
   datasource:
-    url: postgresql://peacefulpagessanctuary_db_user:VYI6ey6ZFT4bdCILeiz5hj4NrHM8iCvQ@dpg-d6bloc6mcj7s73alsttg-a/peacefulpagessanctuary_db
+    url: jdbc:postgresql://dpg-d6bloc6mcj7s73alsttg-a.singapore-postgres.render.com:5432/peacefulpagessanctuary_db?sslmode=require
     username: peacefulpagessanctuary_db_user
     password: VYI6ey6ZFT4bdCILeiz5hj4NrHM8iCvQ
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

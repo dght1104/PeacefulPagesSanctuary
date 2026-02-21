@@ -7,7 +7,9 @@ import com.peacefulpagessanctuary.exception.InvalidOperationException;
 import com.peacefulpagessanctuary.exception.ResourceNotFoundException;
 import com.peacefulpagessanctuary.repository.CustomerGroupRepository;
 import com.peacefulpagessanctuary.repository.CustomerRepository;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -18,11 +20,11 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerGroupRepository customerGroupRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public CustomerService(CustomerRepository customerRepository,
                            CustomerGroupRepository customerGroupRepository,
-                           BCryptPasswordEncoder passwordEncoder) {
+                           PasswordEncoder  passwordEncoder) {
         this.customerRepository = customerRepository;
         this.customerGroupRepository = customerGroupRepository;
         this.passwordEncoder = passwordEncoder;
