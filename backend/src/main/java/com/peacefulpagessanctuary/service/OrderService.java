@@ -102,8 +102,8 @@ public class OrderService {
         CouponShip shippingCoupon = null;
 
         if (productCouponCode != null) {
-            productCoupon = couponService.validateProductCoupon(
-                    productCouponCode, customer, subtotal);
+            productCoupon = couponService.validateProductCoupon(productCouponCode,
+                            customer,BigDecimal.valueOf(subtotal));
 
             if ("PERCENT".equalsIgnoreCase(productCoupon.getDiscountType())) {
 
@@ -178,24 +178,39 @@ public class OrderService {
             couponService.incrementShippingCouponUsage(shippingCoupon);
         }
 
-        customer.setTotalSpent(customer.getTotalSpent() + finalTotal);
+        BigDecimal current = customer.getTotalSpent() == null
+        ? BigDecimal.ZERO
+        : customer.getTotalSpent();
+
+        customer.setTotalSpent(
+                current.add(BigDecimal.valueOf(finalTotal))
+        );
 
         CustomerGroup newGroup;
 
-        if (customer.getTotalSpent() >= 25_000_000L) {
-            newGroup = customerGroupRepository.findByName("Platinum")
+       BigDecimal total = customer.getTotalSpent() == null
+        ? BigDecimal.ZERO
+        : customer.getTotalSpent();
+
+        if (total.compareTo(BigDecimal.valueOf(25_000_000L)) >= 0) {
+
+            newGroup = customerGroupRepository.findByDescription("Platinum")
                     .orElseThrow(() -> new ResourceNotFoundException("Group not found"));
-        } else if (customer.getTotalSpent() >= 15_000_000L) {
-            newGroup = customerGroupRepository.findByName("Gold")
+
+        } else if (total.compareTo(BigDecimal.valueOf(15_000_000L)) >= 0) {
+
+            newGroup = customerGroupRepository.findByDescription("Gold")
                     .orElseThrow(() -> new ResourceNotFoundException("Group not found"));
+
         } else {
-            newGroup = customerGroupRepository.findByName("Silver")
+
+            newGroup = customerGroupRepository.findByDescription("Silver")
                     .orElseThrow(() -> new ResourceNotFoundException("Group not found"));
         }
 
         customer.setCustomerGroup(newGroup);
 
-        cartItemRepository.deleteByCustomer(customer);
+        cartItemRepository.deleteByCustomerId(customer.getId());
 
         return order;
     }

@@ -10,6 +10,7 @@ import com.peacefulpagessanctuary.repository.CustomerRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -33,11 +34,11 @@ public class CustomerService {
         }
 
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
-        customer.setTotalSpent(0L);
+        customer.setTotalSpent(BigDecimal.ZERO);
 
-        CustomerGroup defaultGroup = customerGroupRepository.findByName("Silver")
-                .orElseThrow(() -> new ResourceNotFoundException("Default group not found"));
-
+        CustomerGroup defaultGroup = customerGroupRepository.findByDescription("Slivers")
+        .orElseThrow(() -> 
+            new ResourceNotFoundException("Default group not found"));
         customer.setCustomerGroup(defaultGroup);
 
         return customerRepository.save(customer);

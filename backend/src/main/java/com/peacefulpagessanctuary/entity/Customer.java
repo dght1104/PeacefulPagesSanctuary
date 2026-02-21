@@ -35,8 +35,9 @@ public class Customer extends BaseEntity {
     @Column(name = "cus_password")
     private String password;
 
-    @Column(name = "cus_group")
-    private String customerGroup;
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private CustomerGroup customerGroup;
 
     @Column(name = "is_verified")
     private Boolean verified;

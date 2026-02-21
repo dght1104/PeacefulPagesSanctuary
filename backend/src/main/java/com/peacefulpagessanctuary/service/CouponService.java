@@ -1,5 +1,6 @@
 package com.peacefulpagessanctuary.service;
 
+import com.peacefulpagessanctuary.entity.CustomerGroup;
 import com.peacefulpagessanctuary.entity.Coupon;
 import com.peacefulpagessanctuary.entity.CouponShip;
 import com.peacefulpagessanctuary.entity.Customer;
@@ -9,6 +10,7 @@ import com.peacefulpagessanctuary.repository.CouponRepository;
 import com.peacefulpagessanctuary.repository.CouponShipRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
@@ -23,7 +25,7 @@ public class CouponService {
         this.couponShipRepository = couponShipRepository;
     }
 
-    public Coupon validateProductCoupon(String code, Customer customer, long subtotal) {
+    public Coupon validateProductCoupon(String code, Customer customer, BigDecimal subtotal) {
 
         Coupon coupon = couponRepository.findByCode(code)
                 .orElseThrow(() -> new ResourceNotFoundException("Coupon not found"));
@@ -44,7 +46,7 @@ public class CouponService {
             throw new CouponInvalidException("Coupon usage limit reached");
         }
 
-        if (subtotal < coupon.getMinOrderValue()) {
+        if (subtotal.compareTo(coupon.getMinOrderValue()) < 0) {
             throw new CouponInvalidException("Minimum order value not satisfied");
         }
 
@@ -59,11 +61,11 @@ public class CouponService {
 
     public CouponShip validateShippingCoupon(String code, Customer customer, long subtotal) {
 
-        CouponShip coupon = couponShipRepository.findByCode(code)
+        CouponShip coupon = couponShipRepository.findById(code)
                 .orElseThrow(() -> new ResourceNotFoundException("Shipping coupon not found"));
 
-        if (!coupon.isActive()) {
-            throw new CouponInvalidException("Shipping coupon inactive");
+        if (!"ACTIVE".equalsIgnoreCase(coupon.getStatus())) {
+            throw new CouponInvalidException("Coupon is not active");
         }
 
         LocalDate today = LocalDate.now();
@@ -78,18 +80,17 @@ public class CouponService {
             throw new CouponInvalidException("Shipping coupon usage limit reached");
         }
 
-        if (subtotal < coupon.getMinOrderValue()) {
+        if (BigDecimal.valueOf(subtotal).compareTo(coupon.getMinOrderValue()) < 0) {
             throw new CouponInvalidException("Minimum order value not satisfied");
         }
 
-        if (coupon.getCustomerGroup() != null &&
-            !coupon.getCustomerGroup().getId()
-                .equals(customer.getCustomerGroup().getId())) {
-            throw new CouponInvalidException("Customer group not eligible");
+        Integer used = coupon.getUsedCount() == null ? 0 : coupon.getUsedCount();
+        if (coupon.getUsageLimit() != null &&
+            used >= coupon.getUsageLimit()) {
+                throw new CouponInvalidException("Shipping coupon usage limit reached");
+            }
+                return coupon;
         }
-
-        return coupon;
-    }
 
     public void incrementProductCouponUsage(Coupon coupon) {
         coupon.setUsedCount(coupon.getUsedCount() + 1);

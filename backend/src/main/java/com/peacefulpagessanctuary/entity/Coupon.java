@@ -43,6 +43,7 @@ public class Coupon {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "customer_group")
-    private String customerGroup;
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private CustomerGroup customerGroup;
 }
