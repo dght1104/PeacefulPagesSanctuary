@@ -6,70 +6,91 @@
         │   │
         │   └── src/
         │       └── main/
-        │           ├── java/
-        │           │   └── peaceful/
-        │           │       │
-        │           │       ├── PeacefulApplication.java
-        │           │       │
-        │           │       ├── config/                # Security & configuration
-        │           │       │   ├── SecurityConfig.java
-        │           │       │   ├── JwtFilter.java
-        │           │       │   ├── JwtUtil.java
-        │           │       │   └── CorsConfig.java
-        │           │       │
-        │           │       ├── controller/            # REST Controllers
-        │           │       │   ├── AuthController.java
-        │           │       │   ├── ProductController.java
-        │           │       │   ├── CartController.java
-        │           │       │   ├── OrderController.java
-        │           │       │   └── CouponController.java
-        │           │       │
-        │           │       ├── service/               # Business Logic Layer
-        │           │       │   ├── AuthService.java
-        │           │       │   ├── ProductService.java
-        │           │       │   ├── CartService.java
-        │           │       │   ├── OrderService.java
-        │           │       │   └── CouponService.java
-        │           │       │
-        │           │       ├── repository/            # Data Access Layer (JPA)
-        │           │       │   ├── CustomerRepository.java
-        │           │       │   ├── ProductRepository.java
-        │           │       │   ├── CartRepository.java
-        │           │       │   ├── OrderRepository.java
-        │           │       │   └── CouponRepository.java
-        │           │       │
-        │           │       ├── model/                 # Entity Models
-        │           │       │   ├── Customer.java
-        │           │       │   ├── Product.java
-        │           │       │   ├── CartItem.java
-        │           │       │   ├── Order.java
-        │           │       │   ├── OrderDetail.java
-        │           │       │   └── Coupon.java
-        │           │       │
-        │           │       └── dto/                   # Data Transfer Objects
-        │           │           ├── LoginRequest.java
-        │           │           ├── RegisterRequest.java
-        │           │           └── CheckoutRequest.java
-        │           │
-        │           └── resources/
-        │               ├── application.yml
-        │               └── static/
+        │           └── java/
+        │            	├── com/
+        │            	│	└── peacefulpagessanctuary/
+        │        		│			├── PeacefulApplication.java
+        │    	        │           │
+        │            	│           ├── config/                
+        │               │           │   └── SecurityConfig.java
+        │            	│           │
+        │            	│           ├── controller/            
+        │        		│           │   ├── AdminController.java
+        │            	│           │   ├── AuthController.java
+        │        		│           │   ├── CartController.java
+        │            	│           │   ├── OrderController.java
+        │            	│           │   └── ProductController.java
+		│				│           │
+        │              	│          	├── model/                                          
+        │              	│           │   ├── Admin.java
+        │              	│           │   ├── BaseEntity.java
+        │              	│           │   ├── CartItem.java
+        │              	│           │   ├── Catalogue.java
+        │              	│           │   ├── Coupon.java
+        │              	│           │   ├── CouponShip.java
+        │              	│           │   ├── Customer.java
+        │               │       	│   ├── CustomerGroup.java
+        │               │       	│   ├── Order.java
+        │               │			│   ├── OrderDetail.java
+        │               │          	│   ├── Product.java
+        │               │          	│   ├── ProductImage.java
+        │               │          	│   ├──  RoleAdmin.java
+        │               │          	│   └── Supplier.java
+		│				│           │	
+        │               │          	├── exception/               
+        │               │          	│   ├── AccessDeniedException.java
+        │               │          	│   ├── CouponInvalidException.java
+        │               │          	│   ├── GlobalExceptionHandler.java
+        │               │          	│   ├── InsufficientStockException.java
+        │               │          	│   ├── InvalidOperationException.java
+        │               │          	│   └── ResourceNotFoundException.java
+		│				│          	│
+        │               │          	├── payload/               
+        │               │          	│   └── ApiResponse.java
+		│ 				│		   	│
+        │               │          	├── repository/          
+        │               │          	│   ├── AdminRepository.java                
+        │               │          	│   ├── CartItemRepository.java 
+        │               │          	│   ├── CatalogueRepository.java 
+        │               │          	│   ├── CouponRepository.java 
+        │               │          	│   ├── CouponShipRepository.java
+        │               │          	│   ├── CustomerGroupRepository.java
+        │               │          	│   ├── CustomerRepository.java
+        │               │          	│   ├── OrderDetailRepository.java
+        │               │          	│   ├── OrderRepository.java
+        │               │          	│   ├── ProductImageRepository.java
+        │               │          	│   ├── ProductRepository.java
+        │               │          	│   ├── RoleAdminRepository.java                 
+        │               │          	│   └── SupplierRepository.java
+		│				│           │
+        │               │          	├── security/               
+        │               │          	│   ├── JwtAuthenticationEntryPoint.java
+        │               │          	│   ├── JwtAuthenticationFilter.java
+        │               │          	│   └── JwtUtils.java
+		│				│		   	│
+        │               │          	└── service/               # Business Logic Layer
+        │               │         		├── AdminService.java
+        │               │            	├── CartService.java
+        │               │             	├── CouponService.java
+        │               │           	├── CustomerService.java
+        │               │             	├── OrderService.java
+        │               │             	└── ProductService.java
+		│	        	│
+		│	           	└── resources/
+		│	            	├── application.yml
+		│	            	└── schema.sql
         │
-        ├── frontend/                     # React + Vite Frontend
-        │   │
-        │   ├── public/
-        │   │
+        ├── frontend/                     
         │   ├── src/
-        │   │   ├── assets/               # Images, styles, static files
-        │   │   ├── components/           # Reusable UI components
-        │   │   ├── pages/                # Page-level components
-        │   │   ├── services/             # API calls
-        │   │   ├── hooks/                # Custom React hooks
-        │   │   ├── context/              # Global state (Auth, Cart, etc.)
-        │   │   ├── layouts/              # Layout wrappers
-        │   │   ├── routes/               # Route definitions
-        │   │   ├── utils/                # Helper functions
-        │   │   │
+        │   │   ├── api/       
+		│   │	│	└── axios.js               
+        │   │   ├── context/ 
+		│   │	│	└── AuthContext.jsx       
+		│   │   ├── pages/  
+		│   │	│	├── CartPage.jsx
+		│   │	│	├── CheckoutPage.jsx
+		│   │	│	├── OrderHistoryPage.jsx
+		│   │	│	└── ProductList.jsx 
         │   │   ├── App.jsx
         │   │   └── main.jsx
         │   │
@@ -77,4 +98,6 @@
         │   ├── package.json
         │   └── vite.config.js
         │
+		├── .gitignore
+		│
         └── README.md
