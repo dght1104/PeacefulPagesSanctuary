@@ -102,3 +102,13 @@
 		├── .gitignore
 		│
         └── README.md
+
+cd frontend
+
+npm install
+
+npm run dev
+
+npm run build
+
+https://peacefulpagessanctuary-fe.onrender.com
