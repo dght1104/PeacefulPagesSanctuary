@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Card, Box, Typography, Button, IconButton, Chip } from "@mui/material";
+
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { Link } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
+
 export default function BookCard({
   id = "1",
   title = "The Midnight Library",
@@ -15,7 +17,6 @@ export default function BookCard({
   coverImage = "https://covers.openlibrary.org/b/id/10909258-L.jpg",
   badge = "-25%",
   onAddToCart,
-  // eslint-disable-next-line react/prop-types
   onWishlist,
 }) {
   const [wishlisted, setWishlisted] = useState(false);
@@ -61,6 +62,7 @@ export default function BookCard({
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            transition: "0.3s",
             "&:hover": { transform: "scale(1.05)" },
           }}
         />
@@ -122,9 +124,7 @@ export default function BookCard({
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
-              "&:hover": {
-                color: "primary.main",
-              },
+              "&:hover": { color: "primary.main" },
             }}
           >
             {title}
@@ -163,8 +163,7 @@ export default function BookCard({
             borderRadius: "10px",
             fontSize: "0.75rem",
             textTransform: "none",
-            color: "#fff",
-            bgcolor: added ? "#2169F9" : "#2169F9",
+            bgcolor: "#2169F9",
           }}
         >
           {added ? "Added!" : "Add to Cart"}
