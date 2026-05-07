@@ -43,8 +43,8 @@ Coded by www.creative-tim.com
 // import GitHubIcon from "@mui/icons-material/GitHub";
 
 // // Pages
-// import AboutUs from "layouts/pages/landing-pages/about-us";
-// import ContactUs from "layouts/pages/landing-pages/contact-us";
+import AboutUs from "layouts/pages/landing-pages/about-us";
+import ContactUs from "layouts/pages/landing-pages/contact-us";
 // import Author from "layouts/pages/landing-pages/author";
 // import SignIn from "layouts/pages/authentication/sign-in";
 
@@ -106,6 +106,18 @@ const routes = [
     ],
   },
 
+  {
+    name: "Info",
+    collapse: [
+      {
+        name: "About Us",
+        route: "/about-us",
+        component: <AboutUs />,
+      },
+      { name: "Contact Us", route: "/contact-us", component: <ContactUs /> },
+    ],
+  },
+
   { name: "Cart", route: "/cart" },
 
   {
@@ -114,6 +126,7 @@ const routes = [
       { name: "Sign In", route: "/login" },
       { name: "Orders", route: "/orders" },
       { name: "Profile", route: "/profile" },
+      { name: "Logout", route: "/login" },
     ],
   },
 ];
