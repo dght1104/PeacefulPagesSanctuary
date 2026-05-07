@@ -1,16 +1,7 @@
 /**
 =========================================================
-* Material Kit 2 React - v2.1.0
+* Material Kit 2 React - Sign Up Page
 =========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
 import { useState } from "react";
@@ -20,14 +11,7 @@ import { Link } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
-
-// @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
 
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
@@ -36,19 +20,35 @@ import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 
 // Material Kit 2 React example components
-// import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import SimpleFooter from "examples/Footers/SimpleFooter";
-
-// Material Kit 2 React page layout routes
-// import routes from "routes";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
-function SignInBasic() {
-  const [rememberMe, setRememberMe] = useState(false);
+function SignUp() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    console.log(formData);
+  };
 
   return (
     <>
@@ -70,6 +70,7 @@ function SignInBasic() {
           backgroundRepeat: "no-repeat",
         }}
       />
+
       <MKBox
         px={1}
         width="100%"
@@ -99,49 +100,52 @@ function SignInBasic() {
                 textAlign="center"
               >
                 <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                  Sign in
+                  Sign up
                 </MKTypography>
-                <Grid container justifyContent="center" spacing={2} sx={{ mt: 2 }}>
-                  {" "}
-                  <Grid item xs={2}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
-                      <FacebookIcon color="inherit" />
-                    </MKTypography>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
-                      <GitHubIcon color="inherit" />
-                    </MKTypography>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
-                      <GoogleIcon color="inherit" />
-                    </MKTypography>
-                  </Grid>
-                </Grid>
+
+                <MKTypography variant="body2" color="white" opacity={0.8} mt={1}>
+                  Create your account
+                </MKTypography>
               </MKBox>
+
               <MKBox pt={4} pb={3} px={3}>
-                <MKBox component="form" role="form">
+                <MKBox component="form" role="form" onSubmit={handleSubmit}>
                   <MKBox mb={2}>
-                    <MKInput type="email" label="Email" fullWidth />
+                    <MKInput
+                      type="email"
+                      label="Email"
+                      name="email"
+                      fullWidth
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
                   </MKBox>
+
                   <MKBox mb={2}>
-                    <MKInput type="password" label="Password" fullWidth />
+                    <MKInput
+                      type="password"
+                      label="Password"
+                      name="password"
+                      fullWidth
+                      value={formData.password}
+                      onChange={handleChange}
+                    />
                   </MKBox>
-                  <MKBox display="flex" alignItems="center" ml={-1}>
-                    <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-                    <MKTypography
-                      variant="button"
-                      fontWeight="regular"
-                      color="text"
-                      onClick={handleSetRememberMe}
-                      sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-                    >
-                      &nbsp;&nbsp;Remember me
-                    </MKTypography>
+
+                  <MKBox mb={2}>
+                    <MKInput
+                      type="password"
+                      label="Confirm Password"
+                      name="confirmPassword"
+                      fullWidth
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                    />
                   </MKBox>
+
                   <MKBox mt={4} mb={1}>
                     <MKButton
+                      type="submit"
                       variant="gradient"
                       color="info"
                       fullWidth
@@ -153,21 +157,22 @@ function SignInBasic() {
                         fontWeight: "bold",
                       }}
                     >
-                      Sign in
+                      Create Account
                     </MKButton>
                   </MKBox>
+
                   <MKBox mt={3} mb={1} textAlign="center">
                     <MKTypography variant="button" color="text">
-                      Don&apos;t have an account?{" "}
+                      Already have an account?{" "}
                       <MKTypography
                         component={Link}
-                        to="/sign-up"
+                        to="/sign-in"
                         variant="button"
                         color="info"
                         fontWeight="medium"
                         textGradient
                       >
-                        Sign up
+                        Sign in
                       </MKTypography>
                     </MKTypography>
                   </MKBox>
@@ -177,6 +182,7 @@ function SignInBasic() {
           </Grid>
         </Grid>
       </MKBox>
+
       <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
         <SimpleFooter light />
       </MKBox>
@@ -184,4 +190,4 @@ function SignInBasic() {
   );
 }
 
-export default SignInBasic;
+export default SignUp;
