@@ -32,7 +32,7 @@ function ContactUs() {
 
       {/* Hero Section */}
       <MKBox
-        minHeight="75vh"
+        minHeight="50vh"
         width="100%"
         sx={{
           backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>

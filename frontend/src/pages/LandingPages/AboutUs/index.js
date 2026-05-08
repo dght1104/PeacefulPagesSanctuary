@@ -55,7 +55,7 @@ function AboutUs() {
         light
       />
       <MKBox
-        minHeight="75vh"
+        minHeight="50vh"
         width="100%"
         sx={{
           backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
@@ -91,14 +91,14 @@ function AboutUs() {
             >
               Work with an amazing design
             </MKTypography>
-            <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
+            <MKTypography variant="body1" color="white" opacity={0.8} mt={0} mb={0}>
               We&apos;re constantly trying to express ourselves and actualize our dreams. If you
               have the opportunity to play this game
             </MKTypography>
             <MKButton color="default" sx={{ color: ({ palette: { dark } }) => dark.main }}>
               create account
             </MKButton>
-            <MKTypography variant="h6" color="white" mt={8} mb={1}>
+            <MKTypography variant="h6" color="white" mt={4} mb={1}>
               Find us on
             </MKTypography>
             <MKBox display="flex" justifyContent="center" alignItems="center">
@@ -122,7 +122,7 @@ function AboutUs() {
         sx={{
           p: 2,
           mx: { xs: 2, lg: 3 },
-          mt: -8,
+          mt: -5,
           mb: 4,
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
@@ -132,7 +132,7 @@ function AboutUs() {
         <Featuring />
         <Newsletter />
       </Card>
-      <MKBox pt={6} px={1} mt={6}>
+      <MKBox pt={6} px={0} mt={6}>
         <DefaultFooter content={footerRoutes} />
       </MKBox>
     </>
