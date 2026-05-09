@@ -1,36 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Box, Typography, Button, IconButton, Chip } from "@mui/material";
-
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
-
-export default function BookCard({
-  id = "1",
-  title = "The Midnight Library",
-  author = "Matt Haig",
-  price = 14.99,
-  originalPrice = 19.99,
-  coverImage = "https://covers.openlibrary.org/b/id/10909258-L.jpg",
-  badge = "-25%",
-  onAddToCart,
-  onWishlist,
-}) {
+export default function BookCard({ id, onAddToCart, onWishlist }) {
+  const [book, setBook] = useState(null);
   const [wishlisted, setWishlisted] = useState(false);
   const [added, setAdded] = useState(false);
 
+  // 🔥 fetch data theo id
+  useEffect(() => {
+    async function fetchBook() {
+      // TODO: thay bằng API thật
+      const mockBook = {
+        id,
+        title: "The Midnight Library",
+        author: "Matt Haig",
+        price: 14.99,
+        originalPrice: 19.99,
+        coverImage: "https://covers.openlibrary.org/b/id/10909258-L.jpg",
+        badge: "-25%",
+      };
+
+      setBook(mockBook);
+    }
+
+    if (id) fetchBook();
+  }, [id]);
+
+  if (!book) return null;
+
   const handleWishlist = () => {
     setWishlisted((prev) => !prev);
-    onWishlist?.();
+    onWishlist?.(book);
   };
 
   const handleAddToCart = () => {
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
-    onAddToCart?.();
+    onAddToCart?.(book);
   };
 
   return (
@@ -56,8 +67,8 @@ export default function BookCard({
       <Box sx={{ height: "60%", position: "relative", overflow: "hidden" }}>
         <Box
           component="img"
-          src={coverImage}
-          alt={title}
+          src={book.coverImage}
+          alt={book.title}
           sx={{
             width: "100%",
             height: "100%",
@@ -67,9 +78,9 @@ export default function BookCard({
           }}
         />
 
-        {badge && (
+        {book.badge && (
           <Chip
-            label={badge}
+            label={book.badge}
             size="small"
             sx={{
               position: "absolute",
@@ -113,8 +124,8 @@ export default function BookCard({
       >
         <Box>
           <Typography
-            component={Link}
-            to={`/book/${id}`}
+            component={RouterLink}
+            to={`/product/${book.id}`}
             sx={{
               fontSize: "0.8rem",
               fontWeight: 600,
@@ -127,19 +138,19 @@ export default function BookCard({
               "&:hover": { color: "primary.main" },
             }}
           >
-            {title}
+            {book.title}
           </Typography>
 
-          <Typography sx={{ fontSize: "0.7rem", color: "text.disabled" }}>{author}</Typography>
+          <Typography sx={{ fontSize: "0.7rem", color: "text.disabled" }}>{book.author}</Typography>
         </Box>
 
         {/* PRICE */}
         <Box sx={{ display: "flex", gap: 1 }}>
           <Typography sx={{ fontWeight: 700, color: "primary.main" }}>
-            ${price.toFixed(2)}
+            ${book.price.toFixed(2)}
           </Typography>
 
-          {originalPrice && originalPrice > price && (
+          {book.originalPrice > book.price && (
             <Typography
               sx={{
                 textDecoration: "line-through",
@@ -147,7 +158,7 @@ export default function BookCard({
                 color: "text.disabled",
               }}
             >
-              ${originalPrice.toFixed(2)}
+              ${book.originalPrice.toFixed(2)}
             </Typography>
           )}
         </Box>

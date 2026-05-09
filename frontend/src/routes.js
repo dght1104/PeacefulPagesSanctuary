@@ -11,6 +11,8 @@ import SignIn from "layouts/pages/authentication/sign-in";
 import SignUp from "layouts/pages/authentication/sign-up";
 import Presentation from "layouts/pages/presentation";
 import Product from "layouts/pages/product";
+import ProductDetailPage from "layouts/pages/productdetail";
+import Author from "pages/LandingPages/Author";
 
 const routes = [
   {
@@ -40,11 +42,17 @@ const routes = [
   //     },
   //   ],
   // },
-
   {
     name: "Product",
     route: "/product",
     component: <Product />,
+  },
+  {
+    name: "Product Detail",
+    route: "/product/:id",
+    component: <ProductDetailPage />, // hoặc ProductDetail nếu m tách page
+    // component: <div>HELLO DETAIL</div>,
+    noNavbar: true,
   },
   {
     name: "Discover",
@@ -96,8 +104,9 @@ const routes = [
       },
 
       {
-        name: "Profile",
-        route: "/profile",
+        name: "Author",
+        route: "/author",
+        component: <Author />,
       },
     ],
   },

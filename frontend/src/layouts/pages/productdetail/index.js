@@ -14,8 +14,9 @@ Coded by www.creative-tim.com
 */
 
 // Material Kit 2 React pages
-import Product from "pages/LandingPages/Product";
+import ProductDetail from "pages/LandingPages/ProductDetail";
 
-export default function ProductPage() {
-  return <Product />;
+export default function ProductDetailPage() {
+  console.log("DETAIL COMPONENT");
+  return <ProductDetail />;
 }

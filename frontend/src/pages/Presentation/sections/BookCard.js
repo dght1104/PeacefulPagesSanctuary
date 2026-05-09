@@ -1,35 +1,30 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, Box, Typography, Button, IconButton, Chip } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { BookData } from "data/mockBooks";
 
 /* eslint-disable react/prop-types */
-export default function BookCard({
-  id = "1",
-  title = "The Midnight Library",
-  author = "Matt Haig",
-  price = 14.99,
-  originalPrice = 19.99,
-  coverImage = "https://covers.openlibrary.org/b/id/10909258-L.jpg",
-  badge = "-25%",
-  onAddToCart,
-  // eslint-disable-next-line react/prop-types
-  onWishlist,
-}) {
+export default function BookCard({ id, onAddToCart, onWishlist }) {
+  const book = useMemo(() => {
+    return BookData.find((b) => String(b.id) === String(id));
+  }, [id]);
+
   const [wishlisted, setWishlisted] = useState(false);
   const [added, setAdded] = useState(false);
 
+  if (!book) return null;
+
   const handleWishlist = () => {
     setWishlisted((prev) => !prev);
-    onWishlist?.();
+    onWishlist?.(book);
   };
 
   const handleAddToCart = () => {
     setAdded(true);
-    setTimeout(() => setAdded(false), 1800);
-    onAddToCart?.();
+    onAddToCart?.(book);
   };
 
   return (
@@ -55,19 +50,20 @@ export default function BookCard({
       <Box sx={{ height: "60%", position: "relative", overflow: "hidden" }}>
         <Box
           component="img"
-          src={coverImage}
-          alt={title}
+          src={book.coverImage}
+          alt={book.title}
           sx={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            transition: "0.3s",
             "&:hover": { transform: "scale(1.05)" },
           }}
         />
 
-        {badge && (
+        {book.badge && (
           <Chip
-            label={badge}
+            label={book.badge}
             size="small"
             sx={{
               position: "absolute",
@@ -111,8 +107,8 @@ export default function BookCard({
       >
         <Box>
           <Typography
-            component={Link}
-            to={`/book/${id}`}
+            component={RouterLink}
+            to={`/product/${book.id}`}
             sx={{
               fontSize: "0.8rem",
               fontWeight: 600,
@@ -122,24 +118,22 @@ export default function BookCard({
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
-              "&:hover": {
-                color: "primary.main",
-              },
+              "&:hover": { color: "primary.main" },
             }}
           >
-            {title}
+            {book.title}
           </Typography>
 
-          <Typography sx={{ fontSize: "0.7rem", color: "text.disabled" }}>{author}</Typography>
+          <Typography sx={{ fontSize: "0.7rem", color: "text.disabled" }}>{book.author}</Typography>
         </Box>
 
         {/* PRICE */}
         <Box sx={{ display: "flex", gap: 1 }}>
           <Typography sx={{ fontWeight: 700, color: "primary.main" }}>
-            ${price.toFixed(2)}
+            ${book.price.toFixed(2)}
           </Typography>
 
-          {originalPrice && originalPrice > price && (
+          {book.originalPrice > book.price && (
             <Typography
               sx={{
                 textDecoration: "line-through",
@@ -147,7 +141,7 @@ export default function BookCard({
                 color: "text.disabled",
               }}
             >
-              ${originalPrice.toFixed(2)}
+              ${book.originalPrice.toFixed(2)}
             </Typography>
           )}
         </Box>
@@ -163,8 +157,7 @@ export default function BookCard({
             borderRadius: "10px",
             fontSize: "0.75rem",
             textTransform: "none",
-            color: "#fff",
-            bgcolor: added ? "#2169F9" : "#2169F9",
+            bgcolor: "#2169F9",
           }}
         >
           {added ? "Added!" : "Add to Cart"}

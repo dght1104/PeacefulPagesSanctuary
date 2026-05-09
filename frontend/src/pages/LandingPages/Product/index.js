@@ -24,7 +24,7 @@ import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 
 // Data + Component
-import BookCard from "components/MKBookCard";
+import MKBookCard from "pages/Presentation/sections/BookCard";
 import { BookData } from "data/mockBooks";
 import Card from "@mui/material/Card";
 
@@ -91,7 +91,6 @@ export default function ProductPage() {
     return result;
   }, [sortBy, filterGenre, search, priceRange, supplierFilter]);
 
-  // PAGINATION
   const paginatedBooks = useMemo(() => {
     const start = (page - 1) * itemsPerPage;
     return filteredBooks.slice(start, start + itemsPerPage);
@@ -392,19 +391,7 @@ export default function ProductPage() {
                 gap={2.5}
               >
                 {paginatedBooks.map((book) => (
-                  <BookCard
-                    key={book.id}
-                    id={book.id}
-                    title={book.title}
-                    author={book.author}
-                    price={book.price}
-                    originalPrice={book.originalPrice}
-                    coverImage={book.coverImage}
-                    badge={book.badge}
-                    rating={book.rating}
-                    onAddToCart={() => console.log("add", book.id)}
-                    onWishlist={() => console.log("wishlist", book.id)}
-                  />
+                  <MKBookCard key={book.id} id={book.id} />
                 ))}
               </Box>
               <Box display="flex" justifyContent="center" mt={4}>

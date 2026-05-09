@@ -111,9 +111,9 @@ function Presentation() {
               gap: 2,
             }}
           >
-            <MKBookCard />
-            <MKBookCard />
-            <MKBookCard />
+            <MKBookCard id={1} />
+            <MKBookCard id={9} />
+            <MKBookCard id={3} />
           </MKBox>
         </MKBox>
         {/* <Testimonials /> */}
