@@ -401,7 +401,7 @@ export default function ProductDetail() {
         </MKBox>
       </MKBox>
 
-      <MKBox pt={3} px={0} mt={4}>
+      <MKBox px={0} mt={4}>
         <DefaultFooter content={footerRoutes} />
       </MKBox>
     </>

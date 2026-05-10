@@ -13,6 +13,7 @@ import Presentation from "layouts/pages/presentation";
 import Product from "layouts/pages/product";
 import ProductDetailPage from "layouts/pages/productdetail";
 import Author from "pages/LandingPages/Author";
+import Cart from "pages/LandingPages/Cart";
 
 const routes = [
   {
@@ -50,37 +51,25 @@ const routes = [
   {
     name: "Product Detail",
     route: "/product/:id",
-    component: <ProductDetailPage />, // hoặc ProductDetail nếu m tách page
-    // component: <div>HELLO DETAIL</div>,
+    component: <ProductDetailPage />,
     noNavbar: true,
-  },
-  {
-    name: "Discover",
-    collapse: [
-      { name: "Recommended", route: "/recommend" },
-      { name: "Authors", route: "/authors" },
-    ],
   },
 
   {
-    name: "Info",
-    collapse: [
-      {
-        name: "About Us",
-        route: "/about-us",
-        component: <AboutUs />,
-      },
-      {
-        name: "Contact Us",
-        route: "/contact-us",
-        component: <ContactUs />,
-      },
-    ],
+    name: "About Us",
+    route: "/about-us",
+    component: <AboutUs />,
+  },
+  {
+    name: "Contact Us",
+    route: "/contact-us",
+    component: <ContactUs />,
   },
 
   {
     name: "Cart",
     route: "/cart",
+    component: <Cart />,
   },
 
   {

@@ -406,7 +406,7 @@ export default function ProductPage() {
           </Box>
         </Box>
       </Card>
-      <MKBox pt={6} px={0} mt={6}>
+      <MKBox px={0} mt={6}>
         <DefaultFooter content={footerRoutes} />
       </MKBox>
     </>

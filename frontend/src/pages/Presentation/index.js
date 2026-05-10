@@ -26,6 +26,9 @@ function Presentation() {
   return (
     <>
       <DefaultNavbar
+        sx={{
+          mt: 2, // 4 * 8 = 32px
+        }}
         routes={routes}
         action={{
           type: "external",
@@ -36,7 +39,7 @@ function Presentation() {
         sticky
       />
       <MKBox
-        minHeight="75vh"
+        minHeight="50vh"
         width="100%"
         sx={{
           backgroundImage: `url(${bgImage})`,
@@ -118,7 +121,7 @@ function Presentation() {
         </MKBox>
         {/* <Testimonials /> */}
       </Card>
-      <MKBox pt={1} px={1} mt={1}>
+      <MKBox px={1} mt={1}>
         <DefaultFooter content={footerRoutes} />
       </MKBox>
     </>

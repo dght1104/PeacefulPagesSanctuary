@@ -17,6 +17,5 @@ Coded by www.creative-tim.com
 import ProductDetail from "pages/LandingPages/ProductDetail";
 
 export default function ProductDetailPage() {
-  console.log("DETAIL COMPONENT");
   return <ProductDetail />;
 }
