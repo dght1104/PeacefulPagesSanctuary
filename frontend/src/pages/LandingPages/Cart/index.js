@@ -8,6 +8,8 @@
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 import { Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import MKButton from "components/MKButton";
 
 import { useMemo, useState } from "react";
 import {
@@ -74,7 +76,7 @@ export default function Cart() {
       prev.map((item) => (item.id === id ? { ...item, selected: !item.selected } : item))
     );
   };
-
+  const navigate = useNavigate();
   // Select all
   const handleSelectAll = (checked) => {
     setCartItems((prev) =>
@@ -384,11 +386,6 @@ export default function Cart() {
                   <Typography>${subtotal.toFixed(2)}</Typography>
                 </Box>
 
-                <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography color="text.secondary">Shipping</Typography>
-                  <Typography>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</Typography>
-                </Box>
-
                 <Divider sx={{ my: 2 }} />
 
                 <Box display="flex" justifyContent="space-between" mb={3}>
@@ -400,16 +397,9 @@ export default function Cart() {
                   </Typography>
                 </Box>
 
-                <Button
-                  fullWidth
-                  variant="contained"
-                  size="large"
-                  disabled={selectedCount === 0}
-                  component={RouterLink}
-                  to="/checkout"
-                >
-                  Checkout
-                </Button>
+                <MKButton fullWidth color="info" size="large" onClick={() => navigate("/checkout")}>
+                  Place Order
+                </MKButton>
               </Card>
             </Grid>
           </Grid>

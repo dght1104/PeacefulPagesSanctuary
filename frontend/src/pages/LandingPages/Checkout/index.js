@@ -48,6 +48,22 @@ const checkoutItems = [
     image:
       "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80",
   },
+  {
+    id: 2,
+    title: "Clean Code",
+    quantity: 1,
+    price: 24.99,
+    image:
+      "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: 2,
+    title: "Clean Code",
+    quantity: 1,
+    price: 24.99,
+    image:
+      "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80",
+  },
 ];
 
 export default function Checkout() {
@@ -68,10 +84,9 @@ export default function Checkout() {
   const [discount, setDiscount] = useState(0);
 
   // 1. SUBTOTAL
-  const subtotal = useMemo(
-    () => checkoutItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
-    []
-  );
+  const subtotal = useMemo(() => {
+    return checkoutItems.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
+  }, [checkoutItems]);
 
   // 2. SHIPPING
   const shipping = 5;
@@ -307,7 +322,6 @@ export default function Checkout() {
                     label="Cash on Delivery (COD)"
                   />
                   <FormControlLabel value="bank" control={<Radio />} label="Bank Transfer" />
-                  <FormControlLabel value="paypal" control={<Radio />} label="PayPal" />
                 </RadioGroup>
               </Card>
             </Grid>
@@ -326,8 +340,15 @@ export default function Checkout() {
                   Order Summary
                 </Typography>
 
-                {checkoutItems.map((item) => (
-                  <Box key={item.id} display="flex" alignItems="center" gap={2} mb={2}>
+                {checkoutItems.map((item, index) => (
+                  <Box
+                    key={`${item.id}-${index}`}
+                    display="flex"
+                    alignItems="center"
+                    gap={2}
+                    mb={2}
+                  >
+                    {/* Product Image */}
                     <Box
                       component="img"
                       src={item.image}
@@ -340,21 +361,44 @@ export default function Checkout() {
                       }}
                     />
 
-                    <Box flex={1}>
-                      <Typography fontWeight="bold" variant="body2">
+                    {/* Title + Qty + Total */}
+                    <Box
+                      flex={1}
+                      display="grid"
+                      gridTemplateColumns="3fr 1fr 1fr"
+                      alignItems="center"
+                      columnGap={2}
+                    >
+                      {/* Title - 3 phần */}
+                      <Typography
+                        fontWeight="bold"
+                        variant="body2"
+                        sx={{
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
                         {item.title}
                       </Typography>
-                      <Typography variant="caption" color="text.secondary">
+
+                      {/* Quantity - 1 phần */}
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        textAlign="center"
+                        whiteSpace="nowrap"
+                      >
                         Qty: {item.quantity}
                       </Typography>
-                    </Box>
 
-                    <Typography fontWeight="bold">
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </Typography>
+                      {/* Total - 1 phần */}
+                      <Typography fontWeight="bold" textAlign="right" whiteSpace="nowrap">
+                        ${(item.price * item.quantity).toFixed(2)}
+                      </Typography>
+                    </Box>
                   </Box>
                 ))}
-
                 <Divider sx={{ my: 2 }} />
 
                 <Box display="flex" justifyContent="space-between" mb={1}>
@@ -394,39 +438,31 @@ export default function Checkout() {
       </Card>
       {/* QR Code Dialog */}
       <Dialog open={openQR} onClose={() => setOpenQR(false)} maxWidth="xs" fullWidth>
-        {" "}
-        <DialogTitle>Bank Transfer</DialogTitle>{" "}
+        <DialogTitle sx={{ textAlign: "center", fontWeight: "bold" }}>Bank Transfer</DialogTitle>
         <DialogContent sx={{ textAlign: "center", py: 3 }}>
-          {" "}
           <Typography variant="body2" color="text.secondary" mb={2}>
-            {" "}
-            Please scan the QR code below to complete your payment.{" "}
-          </Typography>{" "}
+            Please scan the QR code below to complete your payment.
+          </Typography>
           <Box
             component="img"
-            src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=PeacefulPagesSanctuary"
+            src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://peacefulpagessanctuary-fe.onrender.com"
             alt="Bank Transfer QR"
             sx={{ width: 250, height: 250, mx: "auto", borderRadius: 2 }}
-          />{" "}
+          />
           <Typography mt={2} fontWeight="bold">
-            {" "}
-            Vietcombank - 123456789{" "}
-          </Typography>{" "}
+            ABC Bank - 7803945-023478243589
+          </Typography>
           <Typography variant="body2" color="text.secondary">
-            {" "}
-            Account Name: PEACEFUL PAGES SANCTUARY{" "}
-          </Typography>{" "}
+            Account Name: PEACEFUL PAGES SANCTUARY
+          </Typography>
           <Typography variant="body2" color="text.secondary">
-            {" "}
-            Amount: ${total.toFixed(2)}{" "}
-          </Typography>{" "}
-        </DialogContent>{" "}
+            Amount: ${total.toFixed(2)}
+          </Typography>
+        </DialogContent>
         <DialogActions sx={{ px: 3, pb: 3 }}>
-          {" "}
           <MKButton color="dark" onClick={() => setOpenQR(false)}>
-            {" "}
-            Close{" "}
-          </MKButton>{" "}
+            Close
+          </MKButton>
           <MKButton
             color="info"
             onClick={() => {

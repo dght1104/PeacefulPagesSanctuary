@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BookData } from "data/mockBooks";
 import MKBookCard from "pages/Presentation/sections/BookCard";
-
+import { useNavigate } from "react-router-dom";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import DefaultFooter from "examples/Footers/DefaultFooter";
 import MKBox from "components/MKBox";
@@ -17,6 +17,8 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 export default function ProductDetail() {
   const { id } = useParams();
 
+  // Trong component
+  const navigate = useNavigate();
   // Tìm sản phẩm theo id từ URL
   const book = useMemo(() => {
     return BookData.find((item) => item.id === Number(id));
@@ -30,7 +32,7 @@ export default function ProductDetail() {
   // Sản phẩm liên quan (cùng genre, khác id hiện tại)
   const relatedBooks = BookData.filter(
     (item) => item.id !== book.id && item.genre === book.genre
-  ).slice(0, 7);
+  ).slice(0, 4);
 
   // Danh sách ảnh sản phẩm
   const productImages = [
@@ -42,6 +44,20 @@ export default function ProductDetail() {
 
   // Ảnh đang được chọn
   const [selectedImage, setSelectedImage] = useState(productImages[0]);
+
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCart = () => {
+    setAdded(true);
+
+    // // Gọi hàm từ component cha nếu có
+    // onAddToCart?.(book);
+
+    // Sau 3 giây đổi lại chữ "Add to Cart"
+    setTimeout(() => {
+      setAdded(false);
+    }, 3000);
+  };
 
   return (
     <>
@@ -319,36 +335,68 @@ export default function ProductDetail() {
               }}
             >
               <MKButton
-                variant="outlined"
+                variant="contained"
                 size="large"
+                disableElevation
+                onClick={handleAddToCart}
                 startIcon={<ShoppingCartOutlinedIcon />}
                 sx={{
                   px: 4,
                   py: 1.5,
-                  borderColor: "#ee4d2d",
-                  color: "#ee4d2d",
+                  borderRadius: "10px",
+                  fontSize: "0.9rem",
+                  textTransform: "none",
+                  bgcolor: "#A3C1FF !important",
+                  color: "#1E3A5F",
+                  fontWeight: 600,
+                  boxShadow: "none !important",
+
                   "&:hover": {
-                    borderColor: "#d73211",
-                    bgcolor: "rgba(238,77,45,0.04)",
+                    bgcolor: "#8FB3FF !important",
+                    boxShadow: "none !important",
+                  },
+                  "&:focus": {
+                    bgcolor: "#A3C1FF !important",
+                    boxShadow: "none !important",
+                  },
+                  "&:active": {
+                    bgcolor: "#A3C1FF !important",
+                    boxShadow: "none !important",
+                  },
+                  "&.Mui-focusVisible": {
+                    bgcolor: "#A3C1FF !important",
+                    boxShadow: "none !important",
                   },
                 }}
               >
-                Thêm vào giỏ hàng
+                {added ? "Added!" : "Add to Cart"}
               </MKButton>
 
               <MKButton
                 variant="contained"
                 size="large"
+                disableElevation
+                onClick={() => navigate("/cart")}
+                startIcon={<ShoppingCartOutlinedIcon />}
                 sx={{
-                  px: 5,
+                  px: 4,
                   py: 1.5,
-                  bgcolor: "#ee4d2d",
+                  borderRadius: "10px",
+                  fontSize: "0.9rem",
+                  textTransform: "none",
+                  bgcolor: "#ff6060",
+                  color: "#ffffff",
+                  fontWeight: 600,
+                  boxShadow: "none",
+
+                  // Giữ nguyên màu khi hover
                   "&:hover": {
-                    bgcolor: "#d73211",
+                    bgcolor: "#ffffff",
+                    boxShadow: "none",
                   },
                 }}
               >
-                Mua ngay
+                Buy Now
               </MKButton>
             </MKBox>
           </MKBox>
