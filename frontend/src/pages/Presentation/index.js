@@ -13,6 +13,7 @@ import DefaultFooter from "examples/Footers/DefaultFooter";
 // Presentation page sections
 import Counters from "pages/Presentation/sections/Counters";
 import MKBookCard from "pages/Presentation/sections/BookCard";
+// import MKBookCard from "components/MKBookCard";
 // Presentation page components
 
 // Routes

@@ -25,6 +25,11 @@ export default function BookCard({ id, onAddToCart, onWishlist }) {
   const handleAddToCart = () => {
     setAdded(true);
     onAddToCart?.(book);
+
+    // Sau 3 giây đổi lại thành "Add to Cart"
+    setTimeout(() => {
+      setAdded(false);
+    }, 3000);
   };
 
   return (
@@ -147,17 +152,40 @@ export default function BookCard({ id, onAddToCart, onWishlist }) {
         </Box>
 
         {/* BUTTON */}
+
         <Button
           fullWidth
           size="small"
           variant="contained"
+          disableElevation
           onClick={handleAddToCart}
           startIcon={<ShoppingCartOutlinedIcon />}
           sx={{
             borderRadius: "10px",
             fontSize: "0.75rem",
             textTransform: "none",
-            bgcolor: "#2169F9",
+            bgcolor: "#A3C1FF !important",
+            color: "#1E3A5F",
+            fontWeight: 600,
+            boxShadow: "none !important",
+
+            // Giữ nguyên màu ở mọi trạng thái
+            "&:hover": {
+              bgcolor: "#8FB3FF !important",
+              boxShadow: "none !important",
+            },
+            "&:focus": {
+              bgcolor: "#A3C1FF !important",
+              boxShadow: "none !important",
+            },
+            "&:active": {
+              bgcolor: "#A3C1FF !important",
+              boxShadow: "none !important",
+            },
+            "&.Mui-focusVisible": {
+              bgcolor: "#A3C1FF !important",
+              boxShadow: "none !important",
+            },
           }}
         >
           {added ? "Added!" : "Add to Cart"}
