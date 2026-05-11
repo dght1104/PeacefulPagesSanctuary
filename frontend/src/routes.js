@@ -14,6 +14,7 @@ import Product from "layouts/pages/product";
 import ProductDetailPage from "layouts/pages/productdetail";
 import Author from "pages/LandingPages/Author";
 import Cart from "pages/LandingPages/Cart";
+import Checkout from "pages/LandingPages/Checkout";
 
 const routes = [
   {
@@ -70,6 +71,11 @@ const routes = [
     name: "Cart",
     route: "/cart",
     component: <Cart />,
+  },
+  {
+    name: "Checkout",
+    route: "/checkout",
+    component: <Checkout />,
   },
 
   {

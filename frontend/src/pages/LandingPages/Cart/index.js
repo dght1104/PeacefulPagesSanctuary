@@ -406,7 +406,7 @@ export default function Cart() {
                   size="large"
                   disabled={selectedCount === 0}
                   component={RouterLink}
-                  to="/products"
+                  to="/checkout"
                 >
                   Checkout
                 </Button>
