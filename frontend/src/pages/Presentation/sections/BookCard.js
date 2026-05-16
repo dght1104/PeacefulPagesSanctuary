@@ -1,26 +1,19 @@
 import { useState, useMemo } from "react";
-import { Card, Box, Typography, Button, IconButton, Chip } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Card, Box, Typography, Button, Chip } from "@mui/material";
+
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { Link as RouterLink } from "react-router-dom";
 import { BookData } from "data/mockBooks";
 
 /* eslint-disable react/prop-types */
-export default function BookCard({ id, onAddToCart, onWishlist }) {
+export default function BookCard({ id, onAddToCart }) {
   const book = useMemo(() => {
     return BookData.find((b) => String(b.id) === String(id));
   }, [id]);
 
-  const [wishlisted, setWishlisted] = useState(false);
   const [added, setAdded] = useState(false);
 
   if (!book) return null;
-
-  const handleWishlist = () => {
-    setWishlisted((prev) => !prev);
-    onWishlist?.(book);
-  };
 
   const handleAddToCart = () => {
     setAdded(true);
@@ -81,23 +74,6 @@ export default function BookCard({ id, onAddToCart, onWishlist }) {
             }}
           />
         )}
-
-        <IconButton
-          size="small"
-          onClick={handleWishlist}
-          sx={{
-            position: "absolute",
-            top: 6,
-            right: 6,
-            bgcolor: "rgba(255,255,255,0.9)",
-          }}
-        >
-          {wishlisted ? (
-            <FavoriteIcon sx={{ fontSize: 16, color: "error.main" }} />
-          ) : (
-            <FavoriteBorderIcon sx={{ fontSize: 16 }} />
-          )}
-        </IconButton>
       </Box>
 
       {/* CONTENT */}

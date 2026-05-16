@@ -20,7 +20,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import MKButton from "components/MKButton";
 import MKInput from "components/MKInput";
-
+import { Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 // Layout
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import DefaultFooter from "examples/Footers/DefaultFooter";
@@ -70,6 +70,13 @@ export default function Checkout() {
   const navigate = useNavigate();
 
   const [paymentMethod, setPaymentMethod] = useState("cod");
+  const [voucher, setVoucher] = useState("");
+  const [shippingVoucher, setShippingVoucher] = useState("");
+
+  const [discount, setDiscount] = useState(0); // giảm trên subtotal
+  const [shippingDiscount, setShippingDiscount] = useState(0); // giảm trên phí ship
+
+  const [openQR, setOpenQR] = useState(false);
 
   const [form, setForm] = useState({
     fullName: "",
@@ -80,51 +87,86 @@ export default function Checkout() {
     notes: "",
   });
 
-  const [voucher, setVoucher] = useState("");
-  const [discount, setDiscount] = useState(0);
-
-  // 1. SUBTOTAL
+  // =======================
+  // SUBTOTAL
+  // =======================
   const subtotal = useMemo(() => {
     return checkoutItems.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
-  }, [checkoutItems]);
+  }, []);
 
-  // 2. SHIPPING
+  // =======================
+  // SHIPPING
+  // =======================
   const shipping = 5;
 
-  // 3. TOTAL (SAU TẤT CẢ)
-  const total = subtotal + shipping - discount;
+  // Phí ship sau khi áp dụng shipping voucher
+  const finalShipping = Math.max(0, shipping - shippingDiscount);
 
+  // =======================
+  // TOTAL
+  // =======================
+  const total = subtotal + finalShipping - discount;
+
+  // =======================
   // FORM CHANGE
+  // =======================
   const handleChange = (field) => (e) => {
-    setForm({ ...form, [field]: e.target.value });
+    setForm({
+      ...form,
+      [field]: e.target.value,
+    });
   };
 
-  // VOUCHER
+  // =======================
+  // PRODUCT VOUCHER
+  // =======================
   const handleApplyVoucher = () => {
-    if (voucher === "SALE10") setDiscount(subtotal * 0.1);
-    else if (voucher === "FREE5") setDiscount(5);
-    else {
+    const code = voucher.trim().toUpperCase();
+
+    if (code === "SALE10") {
+      setDiscount(subtotal * 0.1); // giảm 10%
+    } else if (code === "FREE5") {
+      setDiscount(5); // giảm $5
+    } else {
       setDiscount(0);
       alert("Invalid voucher");
     }
   };
 
-  // State
-  const [openQR, setOpenQR] = useState(false);
+  // =======================
+  // SHIPPING VOUCHER
+  // =======================
+  const handleApplyShippingVoucher = () => {
+    const code = shippingVoucher.trim().toUpperCase();
 
-  // Sửa handlePlaceOrder
+    if (code === "FREESHIP") {
+      setShippingDiscount(shipping); // miễn phí ship
+    } else if (code === "SHIP3") {
+      setShippingDiscount(Math.min(3, shipping)); // giảm tối đa $3
+    } else {
+      setShippingDiscount(0);
+      alert("Invalid shipping voucher");
+    }
+  };
+
+  // =======================
+  // PLACE ORDER
+  // =======================
   const handlePlaceOrder = () => {
-    // Nếu chọn Bank Transfer thì mở popup QR
     if (paymentMethod === "bank") {
       setOpenQR(true);
       return;
     }
 
-    // COD hoặc PayPal
     console.log({
       customerInfo: form,
       paymentMethod,
       items: checkoutItems,
+      subtotal,
+      shipping,
+      shippingDiscount,
+      finalShipping,
+      discount,
       total,
     });
 
@@ -218,7 +260,7 @@ export default function Checkout() {
         <Container
           maxWidth={false}
           sx={{
-            py: 3,
+            py: 1,
             px: { xs: 2, md: 4, lg: 8 },
           }}
         >
@@ -226,7 +268,7 @@ export default function Checkout() {
             {/* LEFT SIDE - CUSTOMER FORM */}
             <Grid item xs={12} lg={6}>
               <Card sx={{ p: 4, borderRadius: 3 }}>
-                <Typography variant="h4" fontWeight="bold" mb={2}>
+                <Typography variant="h4" align="center" fontWeight="bold" mb={2}>
                   Shipping Information
                 </Typography>
 
@@ -287,24 +329,65 @@ export default function Checkout() {
                     />
                   </Grid>
                 </Grid>
-                {/* Voucher */}
+                {/* Vouchers */}
                 <Typography variant="h4" fontWeight="bold" mt={2} mb={2}>
-                  Voucher
+                  Vouchers
                 </Typography>
 
-                <Grid mb={1}>
-                  <Box display="flex" gap={1}>
-                    <MKInput
-                      fullWidth
-                      label="Enter voucher code"
-                      value={voucher}
-                      onChange={(e) => setVoucher(e.target.value)}
-                    />
+                <Grid container spacing={2}>
+                  {/* Product Voucher */}
+                  <Grid item xs={12} md={6}>
+                    <Box display="flex" gap={1}>
+                      <MKInput
+                        fullWidth
+                        label="Product voucher"
+                        value={voucher}
+                        onChange={(e) => setVoucher(e.target.value)}
+                      />
 
-                    <MKButton variant="contained" color="info" onClick={handleApplyVoucher}>
-                      Apply
-                    </MKButton>
-                  </Box>
+                      <MKButton
+                        variant="contained"
+                        color="info"
+                        size="small"
+                        onClick={handleApplyVoucher}
+                        sx={{
+                          minWidth: "70px",
+                          px: 2,
+                          py: 1,
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        Apply
+                      </MKButton>
+                    </Box>
+                  </Grid>
+
+                  {/* Shipping Voucher */}
+                  <Grid item xs={12} md={6}>
+                    <Box display="flex" gap={1}>
+                      <MKInput
+                        fullWidth
+                        label="Shipping voucher"
+                        value={shippingVoucher}
+                        onChange={(e) => setShippingVoucher(e.target.value)}
+                      />
+
+                      <MKButton
+                        variant="contained"
+                        color="success"
+                        size="small"
+                        onClick={handleApplyShippingVoucher}
+                        sx={{
+                          minWidth: "70px",
+                          px: 2,
+                          py: 1,
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        Apply
+                      </MKButton>
+                    </Box>
+                  </Grid>
                 </Grid>
 
                 {/* Payment Method */}
@@ -336,99 +419,235 @@ export default function Checkout() {
                   top: 100,
                 }}
               >
-                <Typography variant="h5" fontWeight="bold" mb={3}>
+                <Typography align="center" variant="h4" fontWeight="bold" mb={3}>
                   Order Summary
                 </Typography>
 
-                {checkoutItems.map((item, index) => (
-                  <Box
-                    key={`${item.id}-${index}`}
-                    display="flex"
-                    alignItems="center"
-                    gap={2}
-                    mb={2}
+                <TableContainer sx={{ overflowX: "auto" }}>
+                  <Table
+                    size="small"
+                    sx={{
+                      tableLayout: "fixed",
+                      width: "100%",
+
+                      "& .MuiTableCell-root": {
+                        px: 1.5,
+                        py: 1.8,
+                        verticalAlign: "middle",
+                        whiteSpace: "nowrap",
+                      },
+                    }}
                   >
-                    {/* Product Image */}
-                    <Box
-                      component="img"
-                      src={item.image}
-                      alt={item.title}
-                      sx={{
-                        width: 60,
-                        height: 80,
-                        objectFit: "cover",
-                        borderRadius: 2,
-                      }}
-                    />
+                    {/* Column Width */}
+                    <colgroup>
+                      <col style={{ width: "52%" }} />
+                      <col style={{ width: "20%" }} />
+                      <col style={{ width: "8%" }} />
+                      <col style={{ width: "20%" }} />
+                    </colgroup>
 
-                    {/* Title + Qty + Total */}
-                    <Box
-                      flex={1}
-                      display="grid"
-                      gridTemplateColumns="3fr 1fr 1fr"
-                      alignItems="center"
-                      columnGap={2}
-                    >
-                      {/* Title - 3 phần */}
-                      <Typography
-                        fontWeight="bold"
-                        variant="body2"
-                        sx={{
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {item.title}
-                      </Typography>
+                    {/* Body */}
+                    <TableBody>
+                      <TableRow>
+                        {/* Product */}
+                        <TableCell
+                          align="left"
+                          sx={{
+                            fontWeight: 500,
+                            fontSize: "1rem",
+                            borderBottom: "1px solid",
+                            borderColor: "divider",
 
-                      {/* Quantity - 1 phần */}
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        textAlign="center"
-                        whiteSpace="nowrap"
-                      >
-                        Qty: {item.quantity}
-                      </Typography>
+                            // canh thẳng với text bên dưới image
+                            pl: "68px",
+                          }}
+                        >
+                          Product
+                        </TableCell>
 
-                      {/* Total - 1 phần */}
-                      <Typography fontWeight="bold" textAlign="right" whiteSpace="nowrap">
-                        ${(item.price * item.quantity).toFixed(2)}
-                      </Typography>
-                    </Box>
-                  </Box>
-                ))}
+                        {/* Price */}
+                        <TableCell
+                          align="center"
+                          sx={{
+                            fontWeight: 500,
+                            fontSize: "1rem",
+                            borderBottom: "1px solid",
+                            borderColor: "divider",
+                          }}
+                        >
+                          Price
+                        </TableCell>
+
+                        {/* Qty */}
+                        <TableCell
+                          align="center"
+                          sx={{
+                            fontWeight: 500,
+                            fontSize: "1rem",
+                            borderBottom: "1px solid",
+                            borderColor: "divider",
+                          }}
+                        >
+                          Qty
+                        </TableCell>
+
+                        {/* Total */}
+                        <TableCell
+                          align="right"
+                          sx={{
+                            fontWeight: 500,
+                            fontSize: "1rem",
+                            borderBottom: "1px solid",
+                            borderColor: "divider",
+                          }}
+                        >
+                          Total
+                        </TableCell>
+                      </TableRow>
+                      {checkoutItems.map((item, index) => (
+                        <TableRow
+                          key={`${item.id}-${index}`}
+                          sx={{
+                            "&:last-child td": {
+                              borderBottom: "none",
+                            },
+                          }}
+                        >
+                          {/* Product */}
+                          <TableCell align="left">
+                            <Box display="flex" alignItems="center" gap={1.5}>
+                              <Box
+                                component="img"
+                                src={item.image}
+                                alt={item.title}
+                                sx={{
+                                  width: 40,
+                                  height: 55,
+                                  objectFit: "cover",
+                                  borderRadius: 1,
+                                  flexShrink: 0,
+                                }}
+                              />
+
+                              <Typography
+                                variant="body2"
+                                fontWeight="600"
+                                sx={{
+                                  fontSize: "0.85rem",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {item.title}
+                              </Typography>
+                            </Box>
+                          </TableCell>
+
+                          {/* Price */}
+                          <TableCell align="center">
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                fontSize: "0.85rem",
+                              }}
+                            >
+                              ${item.price.toFixed(2)}
+                            </Typography>
+                          </TableCell>
+
+                          {/* Qty */}
+                          <TableCell align="center">
+                            <Typography
+                              variant="body2"
+                              color="text.secondary"
+                              sx={{
+                                fontSize: "0.85rem",
+                              }}
+                            >
+                              {item.quantity}
+                            </Typography>
+                          </TableCell>
+
+                          {/* Total */}
+                          <TableCell align="right">
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                fontSize: "0.85rem",
+                              }}
+                            >
+                              ${(item.price * item.quantity).toFixed(2)}
+                            </Typography>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+
                 <Divider sx={{ my: 2 }} />
 
+                {/* Summary */}
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography color="text.secondary">Subtotal</Typography>
-                  <Typography>${subtotal.toFixed(2)}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Subtotal
+                  </Typography>
+                  <Typography variant="body2">${subtotal.toFixed(2)}</Typography>
                 </Box>
 
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography color="text.secondary">Shipping</Typography>
-                  <Typography>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Shipping
+                  </Typography>
+                  <Typography variant="body2">
+                    {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
+                  </Typography>
                 </Box>
-                {/* Discount */}
+
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography color="text.secondary">Voucher</Typography>
-                  <Typography color={discount > 0 ? "success.main" : "text.secondary"}>
+                  <Typography variant="body2" color="text.secondary">
+                    Discount
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color={discount > 0 ? "success.main" : "text.secondary"}
+                  >
                     -${discount.toFixed(2)}
                   </Typography>
                 </Box>
-                <Divider sx={{ my: 2 }} />
 
-                <Box display="flex" justifyContent="space-between" mb={3}>
-                  <Typography variant="h6" fontWeight="bold">
-                    Total
+                <Box display="flex" justifyContent="space-between" mb={1}>
+                  <Typography variant="body2" color="text.secondary">
+                    Shipping Discount
                   </Typography>
-                  <Typography variant="h6" fontWeight="bold">
-                    ${total.toFixed(2)}
+                  <Typography
+                    variant="body2"
+                    color={shippingDiscount > 0 ? "success.main" : "text.secondary"}
+                  >
+                    -${shippingDiscount.toFixed(2)}
                   </Typography>
                 </Box>
 
-                <MKButton fullWidth color="info" size="large" onClick={handlePlaceOrder}>
+                <Divider sx={{ my: 2 }} />
+
+                <Box display="flex" justifyContent="space-between" mb={3}>
+                  <Typography variant="h6">Total</Typography>
+                  <Typography variant="h6">${total.toFixed(2)}</Typography>
+                </Box>
+
+                <MKButton
+                  fullWidth
+                  color="info"
+                  size="large"
+                  onClick={handlePlaceOrder}
+                  sx={{
+                    borderRadius: 2,
+                    py: 1.2,
+                    fontWeight: 600,
+                    textTransform: "none",
+                  }}
+                >
                   Place Order
                 </MKButton>
               </Card>
