@@ -16,6 +16,7 @@ import Author from "pages/LandingPages/Author";
 import Cart from "pages/LandingPages/Cart";
 import Checkout from "pages/LandingPages/Checkout";
 import Orders from "pages/LandingPages/Orders";
+import OrderDetail from "pages/LandingPages/OrderDetail";
 const routes = [
   {
     name: "Home",
@@ -92,7 +93,11 @@ const routes = [
         route: "/sign-up",
         component: <SignUp />,
       },
-
+      {
+        name: "Order Detail",
+        route: "/order-detail/:id",
+        component: <OrderDetail />,
+      },
       {
         name: "Orders",
         route: "/orders",

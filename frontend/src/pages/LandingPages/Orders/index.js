@@ -16,111 +16,10 @@ import footerRoutes from "footer.routes";
 
 // Assets
 import bgImage from "assets/images/illustrations/illustration-reset.jpg";
+import { orders } from "data/mockOrder";
 
 export default function OrdersPage() {
   // Mock data dựa trên bảng orders
-  const orders = [
-    {
-      orders_id: "550e8400-e29b-41d4-a716-446655440000",
-      orders_date: "2026-05-15",
-      orders_status: "completed",
-      orders_total: 785000,
-      shipping_fee: 30000,
-      coupon_code: "SAVE10",
-      couponship_code: "FREESHIP",
-      item_count: 3,
-    },
-    {
-      orders_id: "550e8400-e29b-41d4-a716-446655440001",
-      orders_date: "2026-05-14",
-      orders_status: "shipped",
-      orders_total: 420000,
-      shipping_fee: 25000,
-      coupon_code: null,
-      couponship_code: null,
-      item_count: 3,
-    },
-    {
-      orders_id: "550e8400-e29b-41d4-a716-446655440002",
-      orders_date: "2026-05-13",
-      orders_status: "pending",
-      orders_total: 250000,
-      shipping_fee: 30000,
-      coupon_code: "BOOK20",
-      couponship_code: null,
-      item_count: 3,
-    },
-    {
-      orders_id: "550e8400-e29b-41d4-a716-446655440003",
-      orders_date: "2026-05-12",
-      orders_status: "cancelled",
-      orders_total: 150000,
-      shipping_fee: 20000,
-      coupon_code: null,
-      couponship_code: null,
-      item_count: 3,
-    },
-    {
-      orders_id: "550e8400-e29b-41d4-a716-446655440004",
-      orders_date: "2026-05-11",
-      orders_status: "completed",
-      orders_total: 999000,
-      shipping_fee: 0,
-      coupon_code: "VIP50",
-      couponship_code: "SHIPFREE",
-      item_count: 3,
-    },
-    {
-      orders_id: "550e8400-e29b-41d4-a716-446655440005",
-      orders_date: "2026-05-10",
-      orders_status: "shipped",
-      orders_total: 320000,
-      shipping_fee: 25000,
-      coupon_code: null,
-      couponship_code: null,
-      item_count: 3,
-    },
-    {
-      orders_id: "550e8400-e29b-41d4-a716-446655440006",
-      orders_date: "2026-05-09",
-      orders_status: "pending",
-      orders_total: 450000,
-      shipping_fee: 30000,
-      coupon_code: "SAVE15",
-      couponship_code: null,
-      item_count: 3,
-    },
-    {
-      orders_id: "550e8400-e29b-41d4-a716-446655440007",
-      orders_date: "2026-05-08",
-      orders_status: "completed",
-      orders_total: 650000,
-      shipping_fee: 0,
-      coupon_code: null,
-      couponship_code: "FREESHIP",
-      item_count: 3,
-    },
-    {
-      orders_id: "550e8400-e29b-41d4-a716-446655440008",
-      orders_date: "2026-05-07",
-      orders_status: "cancelled",
-      orders_total: 210000,
-      shipping_fee: 20000,
-      coupon_code: null,
-      couponship_code: null,
-      item_count: 3,
-    },
-    {
-      orders_id: "550e8400-e29b-41d4-a716-446655440009",
-      orders_date: "2026-05-06",
-      orders_status: "completed",
-      orders_total: 880000,
-      shipping_fee: 0,
-      coupon_code: "MAYSALE",
-      couponship_code: "SHIPFREE",
-      item_count: 3,
-    },
-  ];
 
   const formatPrice = (value) => value.toLocaleString("vi-VN") + " ₫";
 
@@ -256,7 +155,7 @@ export default function OrdersPage() {
                   <Box>
                     <MKTypography
                       component={RouterLink}
-                      to={`/orders/${order.orders_id}`}
+                      to={`/order-detail/${order.orders_id}`}
                       variant="h6"
                       sx={{
                         textDecoration: "none",
@@ -267,7 +166,7 @@ export default function OrdersPage() {
                         },
                       }}
                     >
-                      Order #{order.orders_id.slice(0, 8)}
+                      Order #{order.orders_id}
                     </MKTypography>
                     <MKTypography variant="body2" color="text">
                       Placed on {formatDate(order.orders_date)}
