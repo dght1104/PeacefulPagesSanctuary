@@ -3,19 +3,18 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://ep-rough-unit-a1kq9twv-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
-    username: neondb_owner
-    password: npg_mNojQe29AiJr
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3306/peaceful_pages_sanctuary?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Ho_Chi_Minh
+    username: root
+    password: 1104
 
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: false
     open-in-view: false
+
   sql:
     init:
       mode: never

@@ -35,6 +35,18 @@ public class Customer extends BaseEntity {
     @Column(name = "cus_password")
     private String password;
 
+       // Ảnh đại diện khách hàng
+    @Column(name = "cus_img", length = 256)
+    private String image;
+
+    // Địa chỉ khách hàng
+    @Column(name = "cus_address", length = 256)
+    private String address;
+
+    // Ngày sinh
+    @Column(name = "cus_dob")
+    private LocalDate dateOfBirth;
+    
     @ManyToOne
     @JoinColumn(name = "group_id")
     private CustomerGroup customerGroup;

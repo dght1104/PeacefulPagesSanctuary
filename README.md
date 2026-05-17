@@ -114,3 +114,8 @@ npm run build
 npx serve -s build
 
 https://peacefulpagessanctuary-fe.onrender.com
+
+
+cd backend 
+mvn clean install
+java -jar target\backend-0.0.1-SNAPSHOT.jar
