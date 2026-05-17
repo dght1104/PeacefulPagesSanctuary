@@ -15,7 +15,10 @@ CREATE TABLE customer (
     cus_group VARCHAR(50) DEFAULT 'Silver',
     is_verified BOOLEAN DEFAULT FALSE,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
-    total_spent NUMERIC(15,2) DEFAULT 0
+    total_spent NUMERIC(15,2) DEFAULT 0,
+    cus_img VARCHAR(256),
+    cus_address  VARCHAR(256),
+    cus_dob DATE,
 );
 
 CREATE TABLE supplier (

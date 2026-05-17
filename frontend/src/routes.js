@@ -12,7 +12,7 @@ import SignUp from "layouts/pages/authentication/sign-up";
 import Presentation from "layouts/pages/presentation";
 import Product from "layouts/pages/product";
 import ProductDetailPage from "layouts/pages/productdetail";
-import Author from "pages/LandingPages/Author";
+import Profile from "pages/LandingPages/Profile";
 import Cart from "pages/LandingPages/Cart";
 import Checkout from "pages/LandingPages/Checkout";
 import Orders from "pages/LandingPages/Orders";
@@ -105,9 +105,9 @@ const routes = [
       },
 
       {
-        name: "Author",
-        route: "/author",
-        component: <Author />,
+        name: "Profile",
+        route: "/profile",
+        component: <Profile />,
       },
     ],
   },
