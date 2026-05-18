@@ -5,20 +5,19 @@ import com.peacefulpagessanctuary.exception.AccessDeniedException;
 import com.peacefulpagessanctuary.exception.InvalidOperationException;
 import com.peacefulpagessanctuary.exception.ResourceNotFoundException;
 import com.peacefulpagessanctuary.repository.AdminRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 @Service
 public class AdminService {
 
     private final AdminRepository adminRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public AdminService(AdminRepository adminRepository,
-                        BCryptPasswordEncoder passwordEncoder) {
-        this.adminRepository = adminRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+                    PasswordEncoder passwordEncoder) {
+    this.adminRepository = adminRepository;
+    this.passwordEncoder = passwordEncoder;
+}
 
     public Admin register(Admin admin) {
         if (adminRepository.existsByUsername(admin.getUsername())) {

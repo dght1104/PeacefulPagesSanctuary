@@ -17,7 +17,7 @@ public class CustomerGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
-    private Long id;
+    private Long groupId;
 
     @Column(name = "group_description")
     private String description;

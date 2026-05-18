@@ -21,13 +21,12 @@
         │            	│           │   ├── OrderController.java
         │            	│           │   └── ProductController.java
 		│				│           │
-        │              	│          	├── model/                                          
+        │              	│          	├── entity/                                          
         │              	│           │   ├── Admin.java
         │              	│           │   ├── BaseEntity.java
         │              	│           │   ├── CartItem.java
         │              	│           │   ├── Catalogue.java
         │              	│           │   ├── Coupon.java
-        │              	│           │   ├── CouponShip.java
         │              	│           │   ├── Customer.java
         │               │       	│   ├── CustomerGroup.java
         │               │       	│   ├── Order.java

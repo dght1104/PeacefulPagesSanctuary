@@ -17,14 +17,13 @@ public class ProductImage {
     @Column(name = "image_id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "prod_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "prod_id", nullable = false)
     private Product product;
 
-    @Lob
-    @Column(name = "image_data")
-    private byte[] imageData;
+    @Column(name = "image_url", nullable = false, length = 512)
+    private String imageUrl;
 
     @Column(name = "is_primary")
-    private Boolean primaryImage;
+    private Boolean isPrimary = false;
 }

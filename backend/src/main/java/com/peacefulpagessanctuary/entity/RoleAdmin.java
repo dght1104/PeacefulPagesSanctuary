@@ -17,6 +17,6 @@ public class RoleAdmin {
     @Column(name = "role_id")
     private Long id;
 
-    @Column(name = "role_name", unique = true)
+    @Column(name = "role_name", unique = true, nullable = false)
     private String roleName;
 }

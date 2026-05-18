@@ -1,12 +1,12 @@
 package com.peacefulpagessanctuary.entity;
 
+import com.peacefulpagessanctuary.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
@@ -18,19 +18,20 @@ import java.util.UUID;
 public class Order extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orders_id")
-    private UUID id;
+    private Long id;
 
     @Column(name = "orders_date")
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
 
-    @ManyToOne
-    @JoinColumn(name = "cus_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cus_id", nullable = false)
     private Customer customer;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "orders_status")
-    private String status;
+    private OrderStatus status;
 
     @Column(name = "orders_total")
     private BigDecimal total;
@@ -38,14 +39,14 @@ public class Order extends BaseEntity {
     @Column(name = "shipping_fee")
     private BigDecimal shippingFee;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coupon_code")
     private Coupon coupon;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "couponship_code")
-    private CouponShip couponShip;
+    private Coupon couponShip;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;
 }

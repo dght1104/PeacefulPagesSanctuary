@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,29 +23,31 @@ public class Product {
     @Column(name = "prod_name")
     private String name;
 
-    @Column(name = "prod_received")
+    @Column(name = "prod_received", nullable = false)
     private Integer received;
 
-    @Column(name = "prod_sold")
-    private Integer sold;
+    @Builder.Default
+    @Column(name = "prod_sold", nullable = false)
+    private Integer sold = 0;
 
-    @Column(name = "prod_price")
+    @Column(name = "prod_price", nullable = false, precision = 15, scale = 2)
     private BigDecimal price;
 
-    @Column(name = "prod_discount")
-    private BigDecimal discount;
+    @Builder.Default
+    @Column(name = "prod_discount", precision = 5, scale = 2)
+    private BigDecimal discount = BigDecimal.ZERO;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cat_id")
     private Catalogue catalogue;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supply_id")
     private Supplier supplier;
 
-    @Column(name = "prod_description")
+    @Column(name = "prod_description", columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductImage> images;
 }

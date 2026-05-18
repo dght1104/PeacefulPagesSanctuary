@@ -3,21 +3,25 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/peaceful_pages_sanctuary?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Ho_Chi_Minh
+    url: jdbc:mysql://localhost:3306/peaceful_pages_sanctuary?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Ho_Chi_Minh
     username: root
     password: 1104
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
+    defer-datasource-initialization: true
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
         format_sql: false
     open-in-view: false
 
   sql:
     init:
-      mode: never
+      mode: always
+      encoding: UTF-8
 
 jwt:
   secret: VGhpc0lzQVNlY3VyZTI1NkJpdEtleUZvckRldlVzZU9ubHkxMjM0

@@ -1,5 +1,8 @@
 package com.peacefulpagessanctuary.entity;
 
+import com.peacefulpagessanctuary.enums.CouponStatus;
+import com.peacefulpagessanctuary.enums.CouponType;
+import com.peacefulpagessanctuary.enums.DiscountType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,20 +16,26 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Coupon {
+public class Coupon extends BaseEntity {
 
     @Id
-    @Column(name = "coupon_code")
+    @Column(name = "coupon_code", length = 50)
     private String code;
 
-    @Column(name = "discount_type")
-    private String discountType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "coupon_type", nullable = false)
+    private CouponType couponType;
 
-    @Column(name = "discount_value")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "discount_type", nullable = false)
+    private DiscountType discountType;
+
+    @Column(name = "discount_value", nullable = false)
     private BigDecimal discountValue;
 
+    @Builder.Default
     @Column(name = "min_order_value")
-    private BigDecimal minOrderValue;
+    private BigDecimal minOrderValue = BigDecimal.ZERO;
 
     @Column(name = "start_date")
     private LocalDate startDate;
@@ -37,13 +46,15 @@ public class Coupon {
     @Column(name = "usage_limit")
     private Integer usageLimit;
 
+    @Builder.Default
     @Column(name = "used_count")
-    private Integer usedCount;
+    private Integer usedCount = 0;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private CouponStatus status = CouponStatus.ACTIVE;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private CustomerGroup customerGroup;
 }

@@ -3,7 +3,7 @@ package com.peacefulpagessanctuary.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -26,7 +26,7 @@ public class Customer extends BaseEntity {
     @Column(name = "cus_email", unique = true)
     private String email;
 
-    @Column(name = "cus_phone")
+    @Column(name = "cus_phone", length = 10)
     private String phone;
 
     @Column(name = "cus_username", unique = true)
@@ -35,31 +35,26 @@ public class Customer extends BaseEntity {
     @Column(name = "cus_password")
     private String password;
 
-       // Ảnh đại diện khách hàng
     @Column(name = "cus_img", length = 256)
     private String image;
 
-    // Địa chỉ khách hàng
     @Column(name = "cus_address", length = 256)
     private String address;
 
-    // Ngày sinh
     @Column(name = "cus_dob")
     private LocalDate dateOfBirth;
-    
-    @ManyToOne
+
+    // FK -> customer_groups
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private CustomerGroup customerGroup;
 
     @Column(name = "is_verified")
-    private Boolean verified;
+    private Boolean verified = false;
 
-    @Column(name = "is_active")
-    private Boolean active;
+    @Column(name = "is_active", nullable = false)
+    private Boolean active = true;
 
-    @Column(name = "total_spent")
-    private BigDecimal totalSpent;
-
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Order> orders;
 }

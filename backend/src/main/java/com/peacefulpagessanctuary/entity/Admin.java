@@ -17,16 +17,16 @@ public class Admin {
     @Column(name = "admin_id")
     private Long id;
 
-    @Column(name = "admin_name")
+    @Column(name = "admin_name", nullable = false)
     private String name;
 
-    @Column(name = "admin_username", unique = true)
+    @Column(name = "admin_username", unique = true, nullable = false)
     private String username;
 
-    @Column(name = "admin_password")
+    @Column(name = "admin_password", nullable = false)
     private String password;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private RoleAdmin role;
 }
