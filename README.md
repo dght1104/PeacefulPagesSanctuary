@@ -116,5 +116,6 @@ https://peacefulpagessanctuary-fe.onrender.com
 
 
 cd backend 
+.\set-env.ps1
 mvn clean install
 java -jar target\backend-0.0.1-SNAPSHOT.jar
