@@ -1,17 +1,29 @@
 package com.peacefulpagessanctuary.repository;
 
-import jakarta.persistence.LockModeType;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Lock;
-import org.springframework.data.jpa.repository.Query;
-
+import com.peacefulpagessanctuary.model.Catalogue;
 import com.peacefulpagessanctuary.model.Product;
+import com.peacefulpagessanctuary.model.Supplier;
 
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT p FROM Product p WHERE p.id = :id")
-    Optional<Product> findByIdForUpdate(Long id);
+    List<Product> findByNameContaining(String keyword);
+
+    List<Product> findByCatalogue(Catalogue catalogue);
+
+    List<Product> findBySupplier(Supplier supplier);
+
+    List<Product> findByPriceBetween(
+            BigDecimal minPrice,
+            BigDecimal maxPrice
+    );
+
+    List<Product> findByDiscountGreaterThan(BigDecimal discount);
+
+    List<Product> findBySoldGreaterThan(Integer sold);
+
 }

@@ -1,13 +1,30 @@
 package com.peacefulpagessanctuary.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
+import com.peacefulpagessanctuary.enums.OrderStatus;
+import com.peacefulpagessanctuary.model.Customer;
 import com.peacefulpagessanctuary.model.Order;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
-public interface OrderRepository extends JpaRepository<Order, UUID> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    List<Order> findByCustomerId(Long customerId);
+    List<Order> findByCustomer(Customer customer);
+
+    List<Order> findByStatus(OrderStatus status);
+
+    List<Order> findByCustomerAndStatus(
+        Customer customer,
+        OrderStatus status
+    );
+
+    List<Order> findByOrderDateBetween(
+        LocalDateTime startDate,
+        LocalDateTime endDate
+    );
+
+    List<Order> findByTotalGreaterThanEqual(Double total);
+
 }
