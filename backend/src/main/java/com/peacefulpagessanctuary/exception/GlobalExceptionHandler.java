@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.peacefulpagessanctuary.dto.response.ApiResponse;
+import com.peacefulpagessanctuary.dto.response.common.ApiResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

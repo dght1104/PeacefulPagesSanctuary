@@ -7,9 +7,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LoginRequest {
+public class ChangePasswordRequest {
 
-    private String username;
+    private String oldPassword;
 
-    private String password;
+    private String newPassword;
+
+    private String confirmPassword;
 }

@@ -1,10 +1,9 @@
 package com.peacefulpagessanctuary.mapper;
 
 import com.peacefulpagessanctuary.dto.request.auth.RegisterRequest;
-import com.peacefulpagessanctuary.dto.response.auth.CustomerResponse;
+import com.peacefulpagessanctuary.dto.response.customer.CustomerResponse;
 import com.peacefulpagessanctuary.model.Customer;
 import org.springframework.stereotype.Component;
-
 
 @Component
 public class CustomerMapper {
@@ -24,8 +23,7 @@ public class CustomerMapper {
                 .username(request.getUsername())
                 // Password sẽ được encode trong service trước hoặc sau khi gọi mapper
                 .password(request.getPassword())
-                .address(request.getAddress())
-                .dateOfBirth(request.getDateOfBirth())
+
                 .verified(false)
                 .active(true)
                 .build();
@@ -70,8 +68,7 @@ public class CustomerMapper {
         customer.setEmail(request.getEmail());
         customer.setPhone(request.getPhone());
         customer.setUsername(request.getUsername());
-        customer.setAddress(request.getAddress());
-        customer.setDateOfBirth(request.getDateOfBirth());
+
 
         if (request.getPassword() != null && !request.getPassword().isBlank()) {
             customer.setPassword(request.getPassword());

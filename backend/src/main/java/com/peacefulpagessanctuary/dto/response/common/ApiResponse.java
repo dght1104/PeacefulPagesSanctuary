@@ -1,4 +1,4 @@
-package com.peacefulpagessanctuary.dto.response;
+package com.peacefulpagessanctuary.dto.response.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

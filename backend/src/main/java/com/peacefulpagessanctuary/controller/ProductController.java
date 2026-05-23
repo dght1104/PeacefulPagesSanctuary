@@ -1,6 +1,6 @@
 package com.peacefulpagessanctuary.controller;
 
-import com.peacefulpagessanctuary.dto.response.ApiResponse;
+import com.peacefulpagessanctuary.dto.response.common.ApiResponse;
 import com.peacefulpagessanctuary.model.Product;
 import com.peacefulpagessanctuary.service.ProductService;
 import org.springframework.data.domain.Page;

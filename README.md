@@ -22,144 +22,188 @@ Admin Management
 
 This architectural style is known as a Modular Monolith, which combines the simplicity of a monolithic application with the maintainability of well-separated modules.
 
-
-
-        PeacefulPagesSanctuary/
-        │
-        ├── backend/                      
-        │   │
-        │   ├── pom.xml
-        │   │
-        │   └── src/
-        │       └── main/
-        │           └── java/
-        │            	├── com/
-        │            	│	└── peacefulpagessanctuary/
-        │            	│           ├── config/                
-        │               │           │   └── SecurityConfig.java
-        │            	│           │
-        │            	│           ├── controller/            
-        │        		│           │   ├── AdminController.java
-        │        		│           │   ├── CatalogueController.java
-        │            	│           │   └── ProductController.java
-		│				│           │
-        │              	│          	├── model/                                          
-        │              	│           │   ├── Admin.java
-        │              	│           │   ├── BaseEntity.java
-        │              	│           │   ├── CartItem.java
-        │              	│           │   ├── Catalogue.java
-        │              	│           │   ├── Coupon.java
-        │              	│           │   ├── Customer.java
-        │               │       	│   ├── CustomerGroup.java
-        │               │       	│   ├── Order.java
-        │               │			│   ├── OrderDetail.java
-        │               │          	│   ├── Product.java
-        │               │          	│   ├── ProductImage.java
-        │               │          	│   ├── RoleAdmin.java
-        │               │          	│   └── Supplier.java
-        │               │           │
-        │               │          	├── enums/               
-        │               │          	│   ├── CouponStatus.java
-        │               │          	│   ├── CouponType.java
-        │               │          	│   ├── DiscountType.java
-        │               │          	│   └── OrderStatus.java
-        │               │           │
-        │               │          	├── exception/               
-        │               │          	│   ├── AccessDeniedException.java
-        │               │          	│   ├── CouponInvalidException.java
-        │               │          	│   ├── GlobalExceptionHandler.java
-        │               │          	│   ├── InsufficientStockException.java
-        │               │          	│   ├── InvalidOperationException.java
-        │               │          	│   └── ResourceNotFoundException.java
-		│				│          	│
-		│				│          	├── mapper/
-
-		│				│          	├── dto/
-		│				│          	│   ├── request/
-		│				│          	│   │   ├── auth/
-		│				│          	│   │   │   ├── LoginRequest.java
-		│				│          	│   │   │   └── RegisterRequest.java
-		│				│          	│   │   ├── cart/
-		│				│          	│   │   │   └── CartItemRequest.java
-		│				│          	│   │   ├── coupon/
-		│				│          	│   │   │   └── CouponRequest.java
-		│				│          	│   │   ├── order/
-		│				│          	│   │   │   └── CheckoutRequest.java
-		│				│          	│   │   └── product/
-		│				│          	│   │       └── ProductRequest.java
-		│				│          	│   │
-		│				│          	│   ├── response/
-		│				│          	│   │   ├── admin/
-		│				│          	│   │   │   └── AdminResponse.java
-		│				│          	│   │   ├── auth/
-		│				│          	│   │   │   ├── CustomerResponse.java
-		│				│          	│   │   │   └── JwtResponse.java
-		│				│          	│   │   ├── cart/
-		│				│          	│   │   │   ├── CartItemResponse.java
-		│				│          	│   │   │   └── CartResponse.java
-		│				│          	│   │   ├── catalogue/
-		│				│          	│   │   │   └── CatalogueResponse.java
-		│				│          	│   │   ├── coupon/
-		│				│          	│   │   │   └── CouponResponse.java
-		│				│          	│   │   ├── order/
-		│				│          	│   │   │   ├── OrderDetailResponse.java
-		│				│          	│   │   │   └── OrderResponse.java
-		│				│          	│   │   ├── product/
-		│				│          	│   │   │   ├── ProductResponse.java
-		│				│          	│   │   │   └── ProductSummaryResponse.java
-		│				│          	│   │   └── ApiResponse.java
-        │               │          	├── repository/          
-        │               │          	│   ├── AdminRepository.java                
-        │               │          	│   ├── CartItemRepository.java 
-        │               │          	│   ├── CatalogueRepository.java 
-        │               │          	│   ├── CouponRepository.java 
-        │               │          	│   ├── CustomerGroupRepository.java
-        │               │          	│   ├── CustomerRepository.java
-        │               │          	│   ├── OrderDetailRepository.java
-        │               │          	│   ├── OrderRepository.java
-        │               │          	│   ├── ProductImageRepository.java
-        │               │          	│   ├── ProductRepository.java
-        │               │          	│   ├── RoleAdminRepository.java                 
-        │               │          	│   └── SupplierRepository.java
-		│				│           │
-        │               │          	├── security/               
-        │               │          	│   ├── JwtAuthenticationEntryPoint.java
-        │               │          	│   ├── JwtAuthenticationFilter.java
-        │               │          	│   └── JwtUtils.java
-		│				│		   	│
-        │               │          	├── service/               
-        │               │         	│	├── AdminService.java
-        │               │           │	├── CartService.java
-        │               │           │  	└── ProductService.java
-		│	        	│           │
-        │               │           └── PeacefulPagesSanctuaryApplication.java
-        │               │ 
-		│	           	└── resources/
-		│	            	├── application.yml
-		│	            	└── schema.sql
-        │
-        ├── frontend/                     
-        │   ├── src/
-        │   │   ├── api/       
-		│   │	│	└── axios.js               
-        │   │   ├── context/ 
-		│   │	│	└── AuthContext.jsx       
-		│   │   ├── pages/  
-		│   │	│	├── CartPage.jsx
-		│   │	│	├── CheckoutPage.jsx
-		│   │	│	├── OrderHistoryPage.jsx
-		│   │	│	└── ProductList.jsx 
-        │   │   ├── App.jsx
-        │   │   └── main.jsx
-        │   │
-        │   ├── .env
-        │   ├── index.html    
-        │   ├── package.json
-        │   └── vite.config.js
-        │
-		├── .gitignore
-		│
-        └── README.md
+PeacefulPagesSanctuary/
+│
+├── backend/
+│   │
+│   ├── pom.xml
+│   │
+│   └── src/
+│       └── main/
+│           ├── java/
+│           │   └── com/
+│           │       └── peacefulpagessanctuary/
+│           │           │
+│           │           ├── config/
+│           │           │   └── SecurityConfig.java
+│           │           │
+│           │           ├── controller/
+│           │           │   ├── AdminController.java
+│           │           │   ├── CatalogueController.java
+│           │           │   └── ProductController.java
+│           │           │
+│           │           ├── model/
+│           │           │   ├── Admin.java
+│           │           │   ├── BaseEntity.java
+│           │           │   ├── CartItem.java
+│           │           │   ├── Catalogue.java
+│           │           │   ├── Coupon.java
+│           │           │   ├── Customer.java
+│           │           │   ├── CustomerGroup.java
+│           │           │   ├── Order.java
+│           │           │   ├── OrderDetail.java
+│           │           │   ├── Product.java
+│           │           │   ├── ProductImage.java
+│           │           │   ├── RoleAdmin.java
+│           │           │   └── Supplier.java
+│           │           │
+│           │           ├── enums/
+│           │           │   ├── CouponStatus.java
+│           │           │   ├── CouponType.java
+│           │           │   ├── DiscountType.java
+│           │           │   └── OrderStatus.java
+│           │           │
+│           │           ├── exception/
+│           │           │   ├── AccessDeniedException.java
+│           │           │   ├── CouponInvalidException.java
+│           │           │   ├── GlobalExceptionHandler.java
+│           │           │   ├── InsufficientStockException.java
+│           │           │   ├── InvalidOperationException.java
+│           │           │   └── ResourceNotFoundException.java
+│           │           │
+│           │           ├── mapper/
+│           │           │
+│           │           ├── dto/
+│           │           │   ├── request/
+│           │           │   │   ├── admin/
+│           │           │   │   │   └── AdminRequest.java
+│           │           │   │   │
+│           │           │   │   ├── auth/
+│           │           │   │   │   ├── LoginRequest.java
+│           │           │   │   │   ├── RegisterRequest.java
+│           │           │   │   │   ├── RefreshTokenRequest.java
+│           │           │   │   │   └── ChangePasswordRequest.java
+│           │           │   │   │
+│           │           │   │   ├── cart/
+│           │           │   │   │   ├── CartItemRequest.java
+│           │           │   │   │   ├── AddToCartRequest.java
+│           │           │   │   │   └── UpdateCartItemRequest.java
+│           │           │   │   │
+│           │           │   │   ├── catalogue/
+│           │           │   │   │   └── CatalogueRequest.java
+│           │           │   │   │
+│           │           │   │   ├── coupon/
+│           │           │   │   │   └── CouponRequest.java
+│           │           │   │   │
+│           │           │   │   ├── customer/
+│           │           │   │   │   └── UpdateProfileRequest.java
+│           │           │   │   │
+│           │           │   │   ├── customergroup/
+│           │           │   │   │   └── CustomerGroupRequest.java
+│           │           │   │   │
+│           │           │   │   ├── order/
+│           │           │   │   │   ├── CheckoutRequest.java
+│           │           │   │   │   └── UpdateOrderStatusRequest.java
+│           │           │   │   │
+│           │           │   │   └── product/
+│           │           │   │       ├── ProductRequest.java
+│           │           │   │       └── UpdateProductRequest.java
+│           │           │   │
+│           │           │   └── response/
+│           │           │       ├── admin/
+│           │           │       │   └── AdminResponse.java
+│           │           │       │
+│           │           │       ├── auth/
+│           │           │       │   └── JwtResponse.java
+│           │           │       │
+│           │           │       ├── cart/
+│           │           │       │   ├── CartItemResponse.java
+│           │           │       │   └── CartResponse.java
+│           │           │       │
+│           │           │       ├── catalogue/
+│           │           │       │   └── CatalogueResponse.java
+│           │           │       │
+│           │           │       ├─ common/
+│           │           │       │   ├── ApiResponse.java
+│           │           │       │   ├── ErrorResponse.java
+│           │           │       │   └── PaginationResponse.java
+│           │           │       │
+│           │           │       ├── coupon/
+│           │           │       │   └── CouponResponse.java
+│           │           │       │
+│           │           │       ├── customer/
+│           │           │       │   └── CustomerResponse.java
+│           │           │       │
+│           │           │       ├── customergroup/
+│           │           │       │   └── CustomerGroupResponse.java
+│           │           │       │
+│           │           │       ├── order/
+│           │           │       │   ├── OrderDetailResponse.java
+│           │           │       │   └── OrderResponse.java
+│           │           │       │
+│           │           │       ├── product/
+│           │           │       │   ├── ProductResponse.java
+│           │           │       │   └── ProductSummaryResponse.java
+│           │           │       │
+│           │           │       └── supplier/
+│           │           │           └── SupplierResponse.java
+│           │           │
+│           │           ├── repository/
+│           │           │   ├── AdminRepository.java
+│           │           │   ├── CartItemRepository.java
+│           │           │   ├── CatalogueRepository.java
+│           │           │   ├── CouponRepository.java
+│           │           │   ├── CustomerGroupRepository.java
+│           │           │   ├── CustomerRepository.java
+│           │           │   ├── OrderDetailRepository.java
+│           │           │   ├── OrderRepository.java
+│           │           │   ├── ProductImageRepository.java
+│           │           │   ├── ProductRepository.java
+│           │           │   ├── RoleAdminRepository.java
+│           │           │   └── SupplierRepository.java
+│           │           │
+│           │           ├── security/
+│           │           │   ├── JwtAuthenticationEntryPoint.java
+│           │           │   ├── JwtAuthenticationFilter.java
+│           │           │   └── JwtUtils.java
+│           │           │
+│           │           ├── service/
+│           │           │   ├── AdminService.java
+│           │           │   ├── CartService.java
+│           │           │   └── ProductService.java
+│           │           │
+│           │           └── PeacefulPagesSanctuaryApplication.java
+│           │
+│           └── resources/
+│               ├── application.yml
+│               └── schema.sql
+│
+├── frontend/
+│   │
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── axios.js
+│   │   │
+│   │   ├── context/
+│   │   │   └── AuthContext.jsx
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── CartPage.jsx
+│   │   │   ├── CheckoutPage.jsx
+│   │   │   ├── OrderHistoryPage.jsx
+│   │   │   └── ProductList.jsx
+│   │   │
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   ├── .env
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+│
+├── .gitignore
+│
+└── README.md
 
 cd frontend
 
@@ -179,7 +223,6 @@ cd backend
 mvn clean install
 java -jar target\backend-0.0.1-SNAPSHOT.jar
 
-1. Repository
 2. DTO
 3. Mapper
 4. Service Interface

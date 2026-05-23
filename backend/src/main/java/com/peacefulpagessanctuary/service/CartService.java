@@ -40,11 +40,5 @@ public class CartService {
         return cartItemRepository.save(item);
     }
 
-    public List<CartItem> getCart(Customer customer) {
-        return cartItemRepository.findByCustomerId(customer.getId());
-    }
 
-    public void clearCart(Customer customer) {
-        cartItemRepository.deleteByCustomerId(customer.getId());
-    }
 }

@@ -1,4 +1,4 @@
-package com.peacefulpagessanctuary.dto.request.auth;
+package com.peacefulpagessanctuary.dto.request.admin;
 
 import lombok.*;
 
@@ -7,15 +7,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegisterRequest {
+public class AdminRequest {
 
     private String name;
-
-    private String email;
-
-    private String phone;
 
     private String username;
 
     private String password;
+
+    private Long roleId;
 }
