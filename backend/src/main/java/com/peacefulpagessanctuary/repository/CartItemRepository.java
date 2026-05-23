@@ -1,7 +1,8 @@
 package com.peacefulpagessanctuary.repository;
 
-import com.peacefulpagessanctuary.entity.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.peacefulpagessanctuary.model.CartItem;
 
 import java.util.List;
 import java.util.Optional;

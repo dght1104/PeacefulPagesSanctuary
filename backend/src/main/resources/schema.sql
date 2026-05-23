@@ -224,9 +224,3 @@ CREATE TABLE IF NOT EXISTS cart_items (
     CONSTRAINT uq_cus_prod UNIQUE (cus_id, prod_id)
 );
 
-
-CREATE INDEX idx_orders_cus ON orders(cus_id);
-
-CREATE INDEX idx_order_details_orders ON order_details(orders_id);
-
-CREATE INDEX idx_order_details_prod ON order_details(prod_id);

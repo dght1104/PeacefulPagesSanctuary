@@ -1,7 +1,8 @@
 package com.peacefulpagessanctuary.repository;
 
-import com.peacefulpagessanctuary.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.peacefulpagessanctuary.model.Customer;
 
 import java.util.Optional;
 

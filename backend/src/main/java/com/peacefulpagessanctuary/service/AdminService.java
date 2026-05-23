@@ -1,9 +1,9 @@
 package com.peacefulpagessanctuary.service;
 
-import com.peacefulpagessanctuary.entity.Admin;
 import com.peacefulpagessanctuary.exception.AccessDeniedException;
 import com.peacefulpagessanctuary.exception.InvalidOperationException;
 import com.peacefulpagessanctuary.exception.ResourceNotFoundException;
+import com.peacefulpagessanctuary.model.Admin;
 import com.peacefulpagessanctuary.repository.AdminRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

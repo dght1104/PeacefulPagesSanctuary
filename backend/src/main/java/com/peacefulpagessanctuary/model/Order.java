@@ -1,4 +1,4 @@
-package com.peacefulpagessanctuary.entity;
+package com.peacefulpagessanctuary.model;
 
 import com.peacefulpagessanctuary.enums.OrderStatus;
 import jakarta.persistence.*;

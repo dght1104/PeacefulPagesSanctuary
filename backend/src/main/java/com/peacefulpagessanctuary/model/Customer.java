@@ -1,4 +1,4 @@
-package com.peacefulpagessanctuary.entity;
+package com.peacefulpagessanctuary.model;
 
 import jakarta.persistence.*;
 import lombok.*;

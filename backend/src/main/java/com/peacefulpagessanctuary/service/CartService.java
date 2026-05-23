@@ -1,10 +1,10 @@
 package com.peacefulpagessanctuary.service;
 
-import com.peacefulpagessanctuary.entity.CartItem;
-import com.peacefulpagessanctuary.entity.Customer;
-import com.peacefulpagessanctuary.entity.Product;
 import com.peacefulpagessanctuary.exception.InvalidOperationException;
 import com.peacefulpagessanctuary.exception.ResourceNotFoundException;
+import com.peacefulpagessanctuary.model.CartItem;
+import com.peacefulpagessanctuary.model.Customer;
+import com.peacefulpagessanctuary.model.Product;
 import com.peacefulpagessanctuary.repository.CartItemRepository;
 import com.peacefulpagessanctuary.repository.ProductRepository;
 import org.springframework.stereotype.Service;

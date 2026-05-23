@@ -1,7 +1,8 @@
 package com.peacefulpagessanctuary.repository;
 
-import com.peacefulpagessanctuary.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.peacefulpagessanctuary.model.Order;
 
 import java.util.List;
 import java.util.UUID;

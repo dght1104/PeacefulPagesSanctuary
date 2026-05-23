@@ -1,7 +1,7 @@
 package com.peacefulpagessanctuary.service;
 
-import com.peacefulpagessanctuary.entity.Product;
 import com.peacefulpagessanctuary.exception.ResourceNotFoundException;
+import com.peacefulpagessanctuary.model.Product;
 import com.peacefulpagessanctuary.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

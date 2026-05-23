@@ -1,6 +1,32 @@
+System Architecture
+
+Peaceful Pages Sanctuary is a full-stack online bookstore built using a Modular Monolithic Architecture.
+
+Technology Stack
+Frontend: React
+Backend: Spring Boot
+Database: Microsoft SQL Server
+Authentication: JWT Authentication
+ORM: Spring Data JPA / Hibernate
+Architecture Style
+
+The backend is implemented as a single deployable Spring Boot application, organized into domain-based modules:
+
+Authentication
+Product Management
+Catalogue Management
+Shopping Cart
+Order Processing
+Coupon Management
+Admin Management
+
+This architectural style is known as a Modular Monolith, which combines the simplicity of a monolithic application with the maintainability of well-separated modules.
+
+
+
         PeacefulPagesSanctuary/
         │
-        ├── backend/                      # Spring Boot Backend
+        ├── backend/                      
         │   │
         │   ├── pom.xml
         │   │
@@ -9,19 +35,15 @@
         │           └── java/
         │            	├── com/
         │            	│	└── peacefulpagessanctuary/
-        │        		│			├── PeacefulApplication.java
-        │    	        │           │
         │            	│           ├── config/                
         │               │           │   └── SecurityConfig.java
         │            	│           │
         │            	│           ├── controller/            
         │        		│           │   ├── AdminController.java
-        │            	│           │   ├── AuthController.java
-        │        		│           │   ├── CartController.java
-        │            	│           │   ├── OrderController.java
+        │        		│           │   ├── CatalogueController.java
         │            	│           │   └── ProductController.java
 		│				│           │
-        │              	│          	├── entity/                                          
+        │              	│          	├── model/                                          
         │              	│           │   ├── Admin.java
         │              	│           │   ├── BaseEntity.java
         │              	│           │   ├── CartItem.java
@@ -33,9 +55,15 @@
         │               │			│   ├── OrderDetail.java
         │               │          	│   ├── Product.java
         │               │          	│   ├── ProductImage.java
-        │               │          	│   ├──  RoleAdmin.java
+        │               │          	│   ├── RoleAdmin.java
         │               │          	│   └── Supplier.java
-		│				│           │	
+        │               │           │
+        │               │          	├── enums/               
+        │               │          	│   ├── CouponStatus.java
+        │               │          	│   ├── CouponType.java
+        │               │          	│   ├── DiscountType.java
+        │               │          	│   └── OrderStatus.java
+        │               │           │
         │               │          	├── exception/               
         │               │          	│   ├── AccessDeniedException.java
         │               │          	│   ├── CouponInvalidException.java
@@ -44,15 +72,47 @@
         │               │          	│   ├── InvalidOperationException.java
         │               │          	│   └── ResourceNotFoundException.java
 		│				│          	│
-        │               │          	├── payload/               
-        │               │          	│   └── ApiResponse.java
-		│ 				│		   	│
+		│				│          	├── mapper/
+
+		│				│          	├── dto/
+		│				│          	│   ├── request/
+		│				│          	│   │   ├── auth/
+		│				│          	│   │   │   ├── LoginRequest.java
+		│				│          	│   │   │   └── RegisterRequest.java
+		│				│          	│   │   ├── cart/
+		│				│          	│   │   │   └── CartItemRequest.java
+		│				│          	│   │   ├── coupon/
+		│				│          	│   │   │   └── CouponRequest.java
+		│				│          	│   │   ├── order/
+		│				│          	│   │   │   └── CheckoutRequest.java
+		│				│          	│   │   └── product/
+		│				│          	│   │       └── ProductRequest.java
+		│				│          	│   │
+		│				│          	│   ├── response/
+		│				│          	│   │   ├── admin/
+		│				│          	│   │   │   └── AdminResponse.java
+		│				│          	│   │   ├── auth/
+		│				│          	│   │   │   ├── CustomerResponse.java
+		│				│          	│   │   │   └── JwtResponse.java
+		│				│          	│   │   ├── cart/
+		│				│          	│   │   │   ├── CartItemResponse.java
+		│				│          	│   │   │   └── CartResponse.java
+		│				│          	│   │   ├── catalogue/
+		│				│          	│   │   │   └── CatalogueResponse.java
+		│				│          	│   │   ├── coupon/
+		│				│          	│   │   │   └── CouponResponse.java
+		│				│          	│   │   ├── order/
+		│				│          	│   │   │   ├── OrderDetailResponse.java
+		│				│          	│   │   │   └── OrderResponse.java
+		│				│          	│   │   ├── product/
+		│				│          	│   │   │   ├── ProductResponse.java
+		│				│          	│   │   │   └── ProductSummaryResponse.java
+		│				│          	│   │   └── ApiResponse.java
         │               │          	├── repository/          
         │               │          	│   ├── AdminRepository.java                
         │               │          	│   ├── CartItemRepository.java 
         │               │          	│   ├── CatalogueRepository.java 
         │               │          	│   ├── CouponRepository.java 
-        │               │          	│   ├── CouponShipRepository.java
         │               │          	│   ├── CustomerGroupRepository.java
         │               │          	│   ├── CustomerRepository.java
         │               │          	│   ├── OrderDetailRepository.java
@@ -67,14 +127,13 @@
         │               │          	│   ├── JwtAuthenticationFilter.java
         │               │          	│   └── JwtUtils.java
 		│				│		   	│
-        │               │          	└── service/               # Business Logic Layer
-        │               │         		├── AdminService.java
-        │               │            	├── CartService.java
-        │               │             	├── CouponService.java
-        │               │           	├── CustomerService.java
-        │               │             	├── OrderService.java
-        │               │             	└── ProductService.java
-		│	        	│
+        │               │          	├── service/               
+        │               │         	│	├── AdminService.java
+        │               │           │	├── CartService.java
+        │               │           │  	└── ProductService.java
+		│	        	│           │
+        │               │           └── PeacefulPagesSanctuaryApplication.java
+        │               │ 
 		│	           	└── resources/
 		│	            	├── application.yml
 		│	            	└── schema.sql
@@ -119,3 +178,11 @@ cd backend
 .\set-env.ps1
 mvn clean install
 java -jar target\backend-0.0.1-SNAPSHOT.jar
+
+1. Repository
+2. DTO
+3. Mapper
+4. Service Interface
+5. Service Implementation
+6. Controller
+7. Test API

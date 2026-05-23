@@ -1,7 +1,8 @@
 package com.peacefulpagessanctuary.repository;
 
-import com.peacefulpagessanctuary.entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.peacefulpagessanctuary.model.Admin;
 
 import java.util.Optional;
 

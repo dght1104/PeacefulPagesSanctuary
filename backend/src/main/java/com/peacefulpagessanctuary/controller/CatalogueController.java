@@ -1,6 +1,6 @@
 package com.peacefulpagessanctuary.controller;
 
-import com.peacefulpagessanctuary.entity.Catalogue;
+import com.peacefulpagessanctuary.model.Catalogue;
 import com.peacefulpagessanctuary.repository.CatalogueRepository;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,7 @@
 package com.peacefulpagessanctuary.controller;
 
-import com.peacefulpagessanctuary.entity.Product;
-import com.peacefulpagessanctuary.payload.ApiResponse;
+import com.peacefulpagessanctuary.dto.response.ApiResponse;
+import com.peacefulpagessanctuary.model.Product;
 import com.peacefulpagessanctuary.repository.ProductRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

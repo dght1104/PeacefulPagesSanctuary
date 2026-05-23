@@ -1,4 +1,4 @@
-package com.peacefulpagessanctuary.entity;
+package com.peacefulpagessanctuary.model;
 
 import com.peacefulpagessanctuary.enums.CouponStatus;
 import com.peacefulpagessanctuary.enums.CouponType;

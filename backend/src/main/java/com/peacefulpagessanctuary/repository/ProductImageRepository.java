@@ -1,7 +1,8 @@
 package com.peacefulpagessanctuary.repository;
 
-import com.peacefulpagessanctuary.entity.ProductImage;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.peacefulpagessanctuary.model.ProductImage;
 
 import java.util.List;
 

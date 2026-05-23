@@ -1,7 +1,7 @@
 package com.peacefulpagessanctuary.controller;
 
-import com.peacefulpagessanctuary.entity.Product;
-import com.peacefulpagessanctuary.payload.ApiResponse;
+import com.peacefulpagessanctuary.dto.response.ApiResponse;
+import com.peacefulpagessanctuary.model.Product;
 import com.peacefulpagessanctuary.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

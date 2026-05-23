@@ -1,4 +1,4 @@
-package com.peacefulpagessanctuary.entity;
+package com.peacefulpagessanctuary.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
