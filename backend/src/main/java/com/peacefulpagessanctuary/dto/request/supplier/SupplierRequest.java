@@ -1,4 +1,5 @@
-package com.peacefulpagessanctuary.dto.request.catalogue;
+package com.peacefulpagessanctuary.dto.request.supplier;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -7,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CatalogueRequest {
+public class SupplierRequest {
 
-    @NotBlank(message = "Catalogue name is required")
+    @NotBlank(message = "Supplier name is required")
     private String name;
 }

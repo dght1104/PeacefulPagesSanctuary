@@ -50,4 +50,17 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductImage> images;
+
+    public String getMainImage() {
+
+    if(images == null || images.isEmpty()) {
+        return null;
+    }
+
+    return images.stream()
+            .filter(ProductImage::getIsPrimary)
+            .findFirst()
+            .orElse(images.get(0))
+            .getImageUrl();
+}
 }
