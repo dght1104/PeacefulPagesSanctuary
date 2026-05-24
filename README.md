@@ -105,9 +105,13 @@ PeacefulPagesSanctuary/
 │           │           │   │   │   ├── CheckoutRequest.java
 │           │           │   │   │   └── UpdateOrderStatusRequest.java
 │           │           │   │   │
-│           │           │   │   └── product/
-│           │           │   │       ├── ProductRequest.java
-│           │           │   │       └── UpdateProductRequest.java
+│           │           │   │   ├── product/
+│           │           │   │   │   ├── ProductImageRequest.java
+│           │           │   │   │   ├── ProductRequest.java
+│           │           │   │   │   └── UpdateProductRequest.java
+│           │           │   │   │
+│           │           │   │   └── supplier/
+│           │           │   │       └── SupplierRequest.java
 │           │           │   │
 │           │           │   └── response/
 │           │           │       ├── admin/
@@ -143,6 +147,7 @@ PeacefulPagesSanctuary/
 │           │           │       │
 │           │           │       ├── product/
 │           │           │       │   ├── ProductResponse.java
+│           │           │       │   ├── ProductImageResponse.java
 │           │           │       │   └── ProductSummaryResponse.java
 │           │           │       │
 │           │           │       └── supplier/
