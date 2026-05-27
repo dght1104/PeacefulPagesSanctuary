@@ -1,27 +1,27 @@
 package com.peacefulpagessanctuary.service;
 
-import com.peacefulpagessanctuary.exception.ResourceNotFoundException;
-import com.peacefulpagessanctuary.model.Product;
-import com.peacefulpagessanctuary.repository.ProductRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import com.peacefulpagessanctuary.dto.request.product.ProductRequest;
+import com.peacefulpagessanctuary.dto.request.product.UpdateProductRequest;
+import com.peacefulpagessanctuary.dto.response.product.ProductResponse;
+import com.peacefulpagessanctuary.dto.response.product.ProductSummaryResponse;
 
-@Service
-public class ProductService {
+import java.util.List;
 
-    private final ProductRepository productRepository;
+public interface ProductService {
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    List<ProductSummaryResponse> getAllProducts();
 
-    public Page<Product> getAllProducts(Pageable pageable) {
-        return productRepository.findAll(pageable);
-    }
+    ProductResponse getProductById(Long id);
 
-    public Product getById(Long id) {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
-    }
+    ProductResponse createProduct(ProductRequest request);
+
+    ProductResponse updateProduct(Long id, UpdateProductRequest request);
+
+    void deleteProduct(Long id);
+
+    List<ProductSummaryResponse> searchProducts(String keyword);
+
+    List<ProductSummaryResponse> getProductsByCatalogue(Long catalogueId);
+
+    List<ProductSummaryResponse> getProductsBySupplier(Long supplierId);
 }

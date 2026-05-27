@@ -1,41 +1,19 @@
 package com.peacefulpagessanctuary.service;
 
-import com.peacefulpagessanctuary.exception.AccessDeniedException;
-import com.peacefulpagessanctuary.exception.InvalidOperationException;
-import com.peacefulpagessanctuary.exception.ResourceNotFoundException;
-import com.peacefulpagessanctuary.model.Admin;
-import com.peacefulpagessanctuary.repository.AdminRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-@Service
-public class AdminService {
+import com.peacefulpagessanctuary.dto.request.admin.AdminRequest;
+import com.peacefulpagessanctuary.dto.response.admin.AdminResponse;
 
-    private final AdminRepository adminRepository;
-    private final PasswordEncoder passwordEncoder;
+import java.util.List;
 
-    public AdminService(AdminRepository adminRepository,
-                    PasswordEncoder passwordEncoder) {
-    this.adminRepository = adminRepository;
-    this.passwordEncoder = passwordEncoder;
-}
+public interface AdminService {
 
-    public Admin register(Admin admin) {
-        if (adminRepository.existsByUsername(admin.getUsername())) {
-            throw new InvalidOperationException("Username already exists");
-        }
+    List<AdminResponse> getAllAdmins();
 
-        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        return adminRepository.save(admin);
-    }
+    AdminResponse getAdminById(Long id);
 
-    public Admin login(String username, String rawPassword) {
-        Admin admin = adminRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("Admin not found"));
+    AdminResponse createAdmin(AdminRequest request);
 
-        if (!passwordEncoder.matches(rawPassword, admin.getPassword())) {
-            throw new AccessDeniedException("Invalid credentials");
-        }
+    AdminResponse updateAdmin(Long id, AdminRequest request);
 
-        return admin;
-    }
+    void deleteAdmin(Long id);
 }

@@ -1,44 +1,18 @@
 package com.peacefulpagessanctuary.service;
 
-import com.peacefulpagessanctuary.exception.InvalidOperationException;
-import com.peacefulpagessanctuary.exception.ResourceNotFoundException;
-import com.peacefulpagessanctuary.model.CartItem;
-import com.peacefulpagessanctuary.model.Customer;
-import com.peacefulpagessanctuary.model.Product;
-import com.peacefulpagessanctuary.repository.CartItemRepository;
-import com.peacefulpagessanctuary.repository.ProductRepository;
-import org.springframework.stereotype.Service;
+import com.peacefulpagessanctuary.dto.request.cart.AddToCartRequest;
+import com.peacefulpagessanctuary.dto.request.cart.UpdateCartItemRequest;
+import com.peacefulpagessanctuary.dto.response.cart.CartResponse;
 
-import java.util.List;
+public interface CartService {
 
-@Service
-public class CartService {
+    CartResponse getCartByCustomer(Long customerId);
 
-    private final CartItemRepository cartItemRepository;
-    private final ProductRepository productRepository;
+    CartResponse addToCart(Long customerId, AddToCartRequest request);
 
-    public CartService(CartItemRepository cartItemRepository,
-                       ProductRepository productRepository) {
-        this.cartItemRepository = cartItemRepository;
-        this.productRepository = productRepository;
-    }
+    CartResponse updateCartItem(Long cartItemId, UpdateCartItemRequest request);
 
-    public CartItem addToCart(Customer customer, Long productId, int quantity) {
+    void removeCartItem(Long cartItemId);
 
-        if (quantity <= 0) {
-            throw new InvalidOperationException("Quantity must be greater than 0");
-        }
-
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
-
-        CartItem item = new CartItem();
-        item.setCustomer(customer);
-        item.setProduct(product);
-        item.setQuantity(quantity);
-
-        return cartItemRepository.save(item);
-    }
-
-
+    void clearCart(Long customerId);
 }
