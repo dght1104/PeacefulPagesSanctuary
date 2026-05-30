@@ -201,7 +201,6 @@ PeacefulPagesSanctuary/
 │           │           │   ├── CartService.java
 │           │           │   ├── CatalogueService.java
 │           │           │   ├── CouponService.java
-│           │           │   ├── CustomerGroupService.java
 │           │           │   ├── CustomerService.java
 │           │           │   ├── OrderService.java
 │           │           │   ├── ProductService.java
@@ -269,7 +268,5 @@ cd backend
 mvn clean install
 java -jar target\backend-0.0.1-SNAPSHOT.jar
 
-4. Service Interface
-5. Service Implementation
 6. Controller
 7. Test API

@@ -9,16 +9,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
-public interface CouponRepository extends JpaRepository<Coupon, String> {
+public interface CouponRepository extends JpaRepository<Coupon, Long> {
+
     List<Coupon> findByStatus(CouponStatus status);
 
     List<Coupon> findByCouponType(CouponType couponType);
 
     List<Coupon> findByCustomerGroup(CustomerGroup customerGroup);
 
+    Optional<Coupon> findByCode(String code);
+    
     boolean existsByCode(String code);
 
     List<Coupon> findByEndDateAfter(LocalDate date);
-
 }
