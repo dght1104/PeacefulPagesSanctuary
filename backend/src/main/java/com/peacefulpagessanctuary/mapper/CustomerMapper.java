@@ -1,41 +1,53 @@
 package com.peacefulpagessanctuary.mapper;
 
 import com.peacefulpagessanctuary.dto.request.auth.RegisterRequest;
+import com.peacefulpagessanctuary.dto.request.customer.CustomerRequest;
+import com.peacefulpagessanctuary.dto.request.customer.UpdateProfileRequest;
 import com.peacefulpagessanctuary.dto.response.customer.CustomerResponse;
 import com.peacefulpagessanctuary.model.Customer;
+import com.peacefulpagessanctuary.model.CustomerGroup;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class CustomerMapper {
 
-    /**
-     * Convert RegisterRequest -> Customer Entity
-     */
+    // Dùng cho Register
     public Customer toEntity(RegisterRequest request) {
-        if (request == null) {
-            return null;
-        }
 
         return Customer.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .username(request.getUsername())
-                // Password sẽ được encode trong service trước hoặc sau khi gọi mapper
                 .password(request.getPassword())
-
                 .verified(false)
                 .active(true)
                 .build();
     }
 
-    /**
-     * Convert Customer Entity -> CustomerResponse DTO
-     */
+    // Dùng cho Admin Dashboard Create Customer
+    public Customer toEntity(
+            CustomerRequest request,
+            CustomerGroup customerGroup
+    ) {
+
+        return Customer.builder()
+                .name(request.getName())
+                .email(request.getEmail())
+                .phone(request.getPhone())
+                .username(request.getUsername())
+                .password(request.getPassword())
+                .image(request.getImage())
+                .address(request.getAddress())
+                .dateOfBirth(request.getDateOfBirth())
+                .verified(request.getVerified())
+                .active(request.getActive())
+                .customerGroup(customerGroup)
+                .build();
+    }
+
     public CustomerResponse toResponse(Customer customer) {
-        if (customer == null) {
-            return null;
-        }
 
         return CustomerResponse.builder()
                 .id(customer.getId())
@@ -56,22 +68,41 @@ public class CustomerMapper {
                 .build();
     }
 
-    /**
-     * Update entity từ RegisterRequest (nếu muốn tái sử dụng cho update profile)
-     */
-    public void updateEntity(Customer customer, RegisterRequest request) {
-        if (customer == null || request == null) {
-            return;
-        }
+    // Admin update customer
+    public void updateEntity(
+            Customer customer,
+            CustomerRequest request,
+            CustomerGroup customerGroup
+    ) {
 
         customer.setName(request.getName());
         customer.setEmail(request.getEmail());
         customer.setPhone(request.getPhone());
         customer.setUsername(request.getUsername());
+        customer.setImage(request.getImage());
+        customer.setAddress(request.getAddress());
+        customer.setDateOfBirth(request.getDateOfBirth());
+        customer.setVerified(request.getVerified());
+        customer.setActive(request.getActive());
+        customer.setCustomerGroup(customerGroup);
 
+        if (request.getPassword() != null
+                && !request.getPassword().isBlank()) {
 
-        if (request.getPassword() != null && !request.getPassword().isBlank()) {
             customer.setPassword(request.getPassword());
         }
+    }
+
+    // Customer tự sửa profile
+    public void updateProfile(
+            Customer customer,
+            UpdateProfileRequest request
+    ) {
+
+        customer.setName(request.getName());
+        customer.setPhone(request.getPhone());
+        customer.setImage(request.getImage());
+        customer.setAddress(request.getAddress());
+        customer.setDateOfBirth(request.getDateOfBirth());
     }
 }

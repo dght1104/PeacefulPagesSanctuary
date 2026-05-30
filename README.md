@@ -116,6 +116,7 @@ PeacefulPagesSanctuary/
 │           │           │   │   │
 │           │           │   │   ├── customer/
 │           │           │   │   │   ├── ChangeEmailRequest.java
+│           │           │   │   │   ├── CustomerRequest.java
 │           │           │   │   │   ├── ForgotPasswordRequest.java
 │           │           │   │   │   ├── ResetPasswordRequest.java
 │           │           │   │   │   └── UpdateProfileRequest.java

@@ -2,8 +2,6 @@ package com.peacefulpagessanctuary.dto.request.coupon;
 
 import com.peacefulpagessanctuary.enums.CouponType;
 import com.peacefulpagessanctuary.enums.DiscountType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.math.BigDecimal;

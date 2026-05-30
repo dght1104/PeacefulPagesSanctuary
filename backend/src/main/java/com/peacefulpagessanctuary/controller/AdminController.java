@@ -1,57 +1,68 @@
 package com.peacefulpagessanctuary.controller;
 
-import com.peacefulpagessanctuary.dto.response.common.ApiResponse;
-import com.peacefulpagessanctuary.model.Product;
-import com.peacefulpagessanctuary.repository.ProductRepository;
-import org.springframework.http.ResponseEntity;
+import com.peacefulpagessanctuary.dto.request.admin.AdminRequest;
+import com.peacefulpagessanctuary.dto.response.admin.AdminResponse;
+import com.peacefulpagessanctuary.service.AdminService;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
+@RequiredArgsConstructor
 public class AdminController {
 
-    private final ProductRepository productRepository;
+    private final AdminService adminService;
 
-    public AdminController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    /**
+     * Lấy danh sách tất cả Admin
+     */
+    @GetMapping
+    public List<AdminResponse> getAllAdmins() {
+        return adminService.getAllAdmins();
     }
 
-    @PostMapping("/products")
-    public ResponseEntity<ApiResponse<Product>> createProduct(@RequestBody Product product) {
+    /**
+     * Lấy Admin theo ID
+     */
+    @GetMapping("/{id}")
+    public AdminResponse getAdminById(
+            @PathVariable Long id) {
 
-        Product saved = productRepository.save(product);
-
-        return ResponseEntity.ok(
-                ApiResponse.success("Product created successfully", saved)
-        );
+        return adminService.getAdminById(id);
     }
 
-    @PutMapping("/products/{id}")
-    public ResponseEntity<ApiResponse<Product>> updateProduct(@PathVariable Long id,
-                                                              @RequestBody Product updated) {
+    /**
+     * Tạo Admin mới
+     */
+    @PostMapping
+    public AdminResponse createAdmin(
+            @RequestBody AdminRequest request) {
 
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        product.setName(updated.getName());
-        product.setPrice(updated.getPrice());
-        product.setReceived(updated.getReceived());
-        product.setDiscount(updated.getDiscount());
-
-        Product saved = productRepository.save(product);
-
-        return ResponseEntity.ok(
-                ApiResponse.success("Product updated successfully", saved)
-        );
+        return adminService.createAdmin(request);
     }
 
-    @DeleteMapping("/products/{id}")
-    public ResponseEntity<ApiResponse<Object>> deleteProduct(@PathVariable Long id) {
+    /**
+     * Cập nhật Admin
+     */
+    @PutMapping("/{id}")
+    public AdminResponse updateAdmin(
+            @PathVariable Long id,
+            @RequestBody AdminRequest request) {
 
-        productRepository.deleteById(id);
+        return adminService.updateAdmin(id, request);
+    }
 
-        return ResponseEntity.ok(
-                ApiResponse.success("Product deleted successfully", null)
-        );
+    /**
+     * Xóa Admin
+     */
+    @DeleteMapping("/{id}")
+    public void deleteAdmin(
+            @PathVariable Long id) {
+
+        adminService.deleteAdmin(id);
     }
 }
